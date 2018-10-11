@@ -15,9 +15,9 @@
       <button type="button" class="btn btn-outline-secondary mr-2">
         <i class="fa fa-plus"></i> Create deck
       </button>
-      <button typ e="button" class="btn btn-outline-secondary">
-        <i class="fa fa-paperclip"></i> Export / Import deck
-      </button>
+        <button type="button" class="btn btn-outline-secondary" @click="toggleExportModal">
+          <i class="fa fa-paperclip"></i> Export / Import deck
+        </button>
     </div>
   </div>
 </template>
@@ -26,12 +26,24 @@
 
 import DeckRow from '../components/deckRow.vue'
 import Navigation from '../components/nav.vue'
+import gql from 'graphql-tag'
 
 export default {
   name: 'decks',
   components: {
     'deck-row': DeckRow,
     'navigation': Navigation
+  },
+  methods: {
+    toggleExportModal() {
+      this.$apollo.mutate({
+        mutation: gql`
+          mutation($isOpen: Boolean) {
+            toggleExportModal (isOpen: $isOpen) @client
+          }
+        `
+      })
+    }
   }
 }
 </script>

@@ -1,16 +1,21 @@
 <template>
   <div id="app">
-    <copy-move-modal />
-    <router-view>
-    </router-view>
+    <router-view></router-view>
+    <export-deck-modal v-if="ExportModal.isOpen"/>
+    <div>test: {{ ExportModal }}</div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
-import DeleteCardModal from './components/deleteCardModal'
-import CardFormModal from './components/cardFormModal'
-import CopyMoveModal from './components/copyMoveModal'
+import DeleteCardModal from './components/Card/deleteCardModal'
+import CardFormModal from './components/Card/cardFormModal'
+import CopyMoveModal from './components/Card/copyMoveModal'
+import NewDeckModal from './components/Deck/newDeckModal'
+import ExportDeckModal from './components/Deck/exportDeckModal'
+import EditDeckModal from './components/Deck/editDeckModal'
+import DeleteDeckModal from './components/Deck/deleteDeckModal'
+
+import { IS_EXPORT_MODAL_OPEN } from './graphql/resolvers'
 
 export default {
   name: 'app',
@@ -18,25 +23,20 @@ export default {
     'delete-card-modal': DeleteCardModal,
     'card-form-modal': CardFormModal,
     'copy-move-modal': CopyMoveModal,
+    'new-deck-modal': NewDeckModal,
+    'export-deck-modal': ExportDeckModal,
+    'edit-deck-modal': EditDeckModal,
+    'delete-deck-modal': DeleteDeckModal,
   },
-  // data () {
-  //   return {
-  //     example1: ''
-  //   }
-  // },
-  methods: {
-    async getLanguage () {
-      try {
-        const res = await axios.post(
-          'http://localhost:4000/graphql', {
-          query: '{ language }'
-        })
-        console.log(res.data.data)
-        this.example1 = res.data.data.language
-      } catch (e) {
-        console.log('err', e)
-      }
+  data () {
+    return {
+      ExportModal: {},
     }
+  },
+  apollo: {
+    ExportModal: {
+      query: IS_EXPORT_MODAL_OPEN,
+    },
   }
 }
 
@@ -93,16 +93,8 @@ export default {
     border-radius: .25rem;
   }
 
-  .glyphicon {
-    display: none;
-  }
-
   .has-error .glyphicon {
     display: block;
-  }
-
-  .resultsWidth {
-    width: 80%;
   }
 
   /* helpers */

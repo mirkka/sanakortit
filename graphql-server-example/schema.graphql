@@ -1,0 +1,11 @@
+type ExportModal {
+  isOpen: Boolean
+}
+
+type Mutation {
+  toggleExportModal(): Boolean
+}
+
+type Query {
+  exportModal: ExportModal
+}

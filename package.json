@@ -5,22 +5,30 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "apollo": "vue-cli-service apollo:watch",
+    "apollo:run": "vue-cli-service apollo:run"
   },
   "dependencies": {
-    "axios": "^0.18.0",
-    "cors": "^2.8.4",
-    "express": "^4.16.3",
-    "express-graphql": "^0.6.12",
+    "apollo-cache-inmemory": "^1.2.10",
+    "apollo-client": "^2.4.2",
+    "apollo-link": "^1.2.3",
+    "apollo-link-http": "^1.5.5",
+    "apollo-link-state": "^0.4.2",
+    "apollo-link-ws": "^1.0.9",
     "graphql": "^14.0.2",
     "lodash": "^4.17.11",
     "vue": "^2.5.17",
+    "vue-apollo": "^3.0.0-beta.25",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.4",
     "@vue/cli-plugin-eslint": "^3.0.4",
     "@vue/cli-service": "^3.0.4",
+    "eslint-plugin-graphql": "^2.1.1",
+    "graphql-tag": "^2.10.0",
+    "vue-cli-plugin-apollo": "^0.17.0",
     "vue-template-compiler": "^2.5.17"
   },
   "eslintConfig": {
