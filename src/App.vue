@@ -102,4 +102,8 @@ export default {
     cursor: pointer;
   }
 
+  .router-link-exact-active {
+    background-color: white;
+  }
+  
 </style>
