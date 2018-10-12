@@ -3,15 +3,16 @@ export const typeDefs = `
     query: Query
   }
 
-  type ExportModal {
-    isOpen: Boolean
+  type Modals {
+    exportDeck: Boolean,
+    createDeck: Boolean
   }
 
   type Mutation {
-    toggleExportModal (isOpen: string): ExportModal
+    toggleModal (modalName: string): Modals
   }
 
   type Query {
-    isExportModalOpen (): ExportModal
+    Modals (): Modals
   }
 `;

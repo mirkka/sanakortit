@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <router-view></router-view>
-    <export-deck-modal v-if="ExportModal.isOpen"/>
-    <div>test: {{ ExportModal }}</div>
+    <export-deck-modal v-if="Modals.exportDeck"/>
+    <new-deck-modal v-if="Modals.createDeck"/>
   </div>
 </template>
 
@@ -15,7 +15,7 @@ import ExportDeckModal from './components/Deck/exportDeckModal'
 import EditDeckModal from './components/Deck/editDeckModal'
 import DeleteDeckModal from './components/Deck/deleteDeckModal'
 
-import { IS_EXPORT_MODAL_OPEN } from './graphql/resolvers'
+import { IS_MODAL_OPEN } from './graphql/resolvers'
 
 export default {
   name: 'app',
@@ -30,12 +30,12 @@ export default {
   },
   data () {
     return {
-      ExportModal: {},
+      Modals: {},
     }
   },
   apollo: {
-    ExportModal: {
-      query: IS_EXPORT_MODAL_OPEN,
+    Modals: {
+      query: IS_MODAL_OPEN,
     },
   }
 }

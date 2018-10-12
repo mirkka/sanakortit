@@ -6,7 +6,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h4 class="modal-title"><i class="fa fa-file-alt"></i> Export / Import deck</h4>
-            <button type="button" class="close" @click="toggleExportModal">
+            <button type="button" class="close" @click="toggleModal('exportDeck')">
               <span>&times;</span>
               <span class="sr-only">Close</span>
             </button>
@@ -42,7 +42,7 @@
                 <button type="button" class="btn btn-secondary btn-sm">Import</button>
               </div>
               <div class="col-sm-2">
-                <button type="button" class="btn btn-outline-secondary btn-sm" @click="toggleExportModal">Close</button>
+                <button type="button" class="btn btn-outline-secondary btn-sm" @click="toggleModal('exportDeck')">Close</button>
             </div>
           </div>
         </div>
@@ -58,13 +58,16 @@ import gql from "graphql-tag";
 export default {
   name: 'exportDeckModal',
   methods: {
-    toggleExportModal() {
+    toggleModal(modalName) {
       this.$apollo.mutate({
         mutation: gql`
-          mutation($isOpen: Boolean) {
-            toggleExportModal (isOpen: $isOpen) @client
+          mutation($modalName: String) {
+            toggleModal (modalName: $modalName) @client
           }
-        `
+        `,
+        variables: {
+          modalName
+        }
       })
     }
   }

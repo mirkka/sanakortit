@@ -1,32 +1,33 @@
 import gql from "graphql-tag";
 
 export const defaults = {
-  ExportModal: {
-    __typename: 'ExportModal',
-    isOpen: false
+  Modals: {
+    exportDeck: false,
+    createDeck: false,
+    __typename: 'Modals',
   },
 };
 
-export const IS_EXPORT_MODAL_OPEN = gql`
+export const IS_MODAL_OPEN = gql`
   query {
-    ExportModal @client {
-      isOpen
+    Modals @client {
+      exportDeck,
+      createDeck
     }
   }
 `
 
 export const resolvers = {
   Mutation: {
-    toggleExportModal: (_, isOpen, { cache }) => {
-      const previous = cache.readQuery({ query: IS_EXPORT_MODAL_OPEN })
-      const data = {
-        ExportModal: {
-          __typename: 'ExportModal',
-          isOpen: !previous.ExportModal.isOpen,
-        }
-      };
+    toggleModal: (_, modalName, { cache }) => {
+      const modals = cache.readQuery({ query: IS_MODAL_OPEN })
+      const key = modalName.modalName;
+      modals.Modals[key] = !modals.Modals[key];
+
+      const data = modals
+
       cache.writeData({ data });
-      return isOpen;
+      return modalName; 
     }
   },
 };
