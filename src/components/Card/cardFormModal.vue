@@ -58,7 +58,6 @@
                 <button type="button" class="btn btn-secondary mr-2" title="Switch card sides">
                   <i class="fa fa-exchange-alt"></i>
                 </button>
-                <!-- TODO: routerl link -->
                 <router-link to="/browse" tag="button" class="btn btn-outline-secondary" @click.native="toggleModal('createCard')">
                   <i class="fa fa-globe-americas"></i>
                 </router-link>
