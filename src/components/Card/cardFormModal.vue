@@ -59,9 +59,9 @@
                   <i class="fa fa-exchange-alt"></i>
                 </button>
                 <!-- TODO: routerl link -->
-                <a href="./browser.html" target="_blank" role="button" class="btn btn-outline-secondary" title="Browse deck">
+                <router-link to="/browse" tag="button" class="btn btn-outline-secondary" @click.native="toggleModal('createCard')">
                   <i class="fa fa-globe-americas"></i>
-                </a>
+                </router-link>
               </div>
               <div>
                 <button type="button" class="btn btn-outline-secondary mr-2" @click="toggleModal('createCard')">Close</button>
