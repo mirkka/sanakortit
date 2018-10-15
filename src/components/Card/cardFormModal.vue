@@ -75,23 +75,10 @@
 </template>
 
 <script>
-import gql from 'graphql-tag' 
+import { toggleModal } from '../../methods.js'
 
 export default {
   name: 'cardFormModal',
-  methods: {
-    toggleModal(modalName) {
-      this.$apollo.mutate({
-        mutation: gql`
-          mutation($modalName: String) {
-            toggleModal (modalName: $modalName) @client
-          }
-        `,
-        variables: {
-          modalName
-        }
-      })
-    }
-  }
+  methods: { toggleModal }
 }
 </script>

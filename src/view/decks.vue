@@ -27,7 +27,7 @@
 
 import DeckRow from '../components/deckRow.vue'
 import Navigation from '../components/nav.vue'
-import gql from 'graphql-tag'
+import { toggleModal } from '../methods.js'
 
 export default {
   name: 'decks',
@@ -35,19 +35,6 @@ export default {
     'deck-row': DeckRow,
     'navigation': Navigation,
   },
-  methods: {
-    toggleModal(modalName) {
-      this.$apollo.mutate({
-        mutation: gql`
-          mutation($modalName: String) {
-            toggleModal (modalName: $modalName) @client
-          }
-        `,
-        variables: {
-          modalName
-        }
-      })
-    }
-  }
+  methods: { toggleModal }
 }
 </script>
