@@ -17,15 +17,27 @@
       </div>
       <div class="pb-3 pt-3 d-flex align-items-center justify-content-between">
         <router-link to="/" tag="button" class="btn btn-secondary">Login</router-link>
-        <a href="#">Create new account</a>
+        <a @click="toggleNewAccountPage">Create new account</a>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import gql from 'graphql-tag'
 
 export default {
   name: 'loginForm',
+  methods: {
+    toggleNewAccountPage() {
+      this.$apollo.mutate({
+        mutation: gql`
+          mutation($empty: String) {
+            toggleNewAccountPage (empty: $empty) @client
+          }
+        `
+      })
+    }
+  }
 }
 </script>

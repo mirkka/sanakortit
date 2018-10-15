@@ -2,9 +2,9 @@
   <div>
     <h5 class="mt-2"><strong>Create account</strong></h5>
     <div class="pt-2 border-top">
-        <div class="disclaimer text-danger text-center">
+        <!-- <div class="disclaimer text-danger text-center">
             <strong>Couldn't create a new user!</strong>
-        </div>
+        </div> -->
         <div class="form-group">
             <label>Username</label>
             <input class="form-control" placeholder="Username">
@@ -22,15 +22,27 @@
         </div>
         <div class="pb-3 pt-3 d-flex align-items-center justify-content-between">
             <button class="btn btn-secondary">Create account</button>
-            <a href="#">Login</a>
+            <a @click="toggleNewAccountPage">Login</a>
         </div>
     </div>
   </div>
 </template>
 
 <script>
+import gql from 'graphql-tag'
 
 export default {
   name: 'signupForm',
+    methods: {
+    toggleNewAccountPage() {
+      this.$apollo.mutate({
+        mutation: gql`
+          mutation($empty: String) {
+            toggleNewAccountPage (empty: $empty) @client
+          }
+        `
+      })
+    }
+  }
 }
 </script>

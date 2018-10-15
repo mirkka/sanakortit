@@ -8,11 +8,17 @@ export const typeDefs = `
     createDeck: Boolean
   }
 
+  type NewAccountPage {
+    isVisible: Boolean
+  }
+
   type Mutation {
-    toggleModal (modalName: string): Modals
+    toggleModal (modalName: string): Modals,
+    toggleNewAccountPage (empty: String): null,
   }
 
   type Query {
-    Modals (): Modals
+    Modals (): Modals,
+    NewAccountPage (): NewAccountPage,
   }
 `;
