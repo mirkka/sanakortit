@@ -11,6 +11,7 @@
     </div>
     <deck-row />
     <deck-row />
+    <deck-row />
     <div class="col-xs-12 border-top mt-3 pt-3 pb-4 d-flex">
       <button type="button" class="btn btn-outline-secondary mr-2" @click="toggleModal('createDeck')">
         <i class="fa fa-plus"></i> Create deck

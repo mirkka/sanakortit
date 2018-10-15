@@ -105,5 +105,9 @@ export default {
   .router-link-exact-active {
     background-color: white;
   }
+
+  .study-card {
+    min-height: 450px;
+  }
   
 </style>

@@ -3,6 +3,7 @@
     <div class="row header">
       <div class="p-3 col-xs-3 text-uppercase"><strong>Sanakortit</strong></div>
     </div>
+    <login-form />
   </div>
 </template>
 

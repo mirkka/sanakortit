@@ -6,7 +6,7 @@
       <div class="col-sm-1 col-xs-3 text-primary">5</div>
     </div>
     <div class="col-sm-12 col-xs-12 py-3">
-      <a href="./study.html" class="btn btn-secondary mr-2" role="button">Study</a>
+      <router-link to="/study" tag="button" class="btn btn-secondary mr-2">Study</router-link>
       <button type="button" class="btn btn-outline-secondary mr-2">Add card</button>
       <button type="button" class="btn btn-outline-secondary mr-2">Edit</button>
       <button type="button" class="btn btn-outline-secondary">Delete</button>
