@@ -1,5 +1,6 @@
 <template>
   <div class="container mt-3 mb-3">
+    <finish-study-modal v-if="false"/>
     <navigation />
     <div class="d-flex flex-column study-card">
       <textarea class="h1 text-center flex-grow-1 border-0 my-4 shadow-sm" disabled>front</textarea>
@@ -36,11 +37,13 @@
 
 <script>
 import Navigation from '../components/nav.vue'
+import FinishStudyModal from '../components/finishStudyModal.vue'
 
 export default {
   name: 'study',
   components: {
-    'navigation': Navigation
+    'navigation': Navigation,
+    'finish-study-modal': FinishStudyModal
   },
 }
 </script>
