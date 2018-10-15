@@ -29,13 +29,13 @@
 
       <div class="col-sm-8 border-left">
         <div class="row py-2 px-3 justify-content-end">
-          <button type="button" class="btn btn-outline-secondary btn-xs" title="Create New card">
+          <button type="button" class="btn btn-outline-secondary btn-xs" title="Create New card" @click="toggleModal('createCard')">
             <i class="fa fa-file-alt"></i>
           </button>
-          <button type="button" class="btn btn-outline-secondary btn-xs" title="Copy or Move card">
+          <button type="button" class="btn btn-outline-secondary btn-xs" title="Copy or Move card" @click="toggleModal('copyCard')">
             <i class="fa fa-copy"></i>
           </button>
-          <button type="button" class="btn btn-outline-secondary btn-xs" title="Delete card">
+          <button type="button" class="btn btn-outline-secondary btn-xs" title="Delete card" @click="toggleModal('deleteCard')">
             <i class="fa fa-trash-alt"></i>
           </button>
         </div>
@@ -78,8 +78,24 @@
 import Navigation from '../components/nav.vue'
 import SearchResult from '../components/searchResult.vue'
 
+import gql from 'graphql-tag'
+
 export default {
   name: 'browse',
+  methods: {
+    toggleModal(modalName) {
+      this.$apollo.mutate({
+        mutation: gql`
+          mutation($modalName: String) {
+            toggleModal (modalName: $modalName) @client
+          }
+        `,
+        variables: {
+          modalName
+        }
+      })
+    }
+  },
   components: {
     'navigation': Navigation,
     'search-result': SearchResult,

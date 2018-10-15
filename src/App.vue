@@ -1,32 +1,37 @@
 <template>
   <div id="app">
     <router-view></router-view>
-    <export-deck-modal v-if="Modals.exportDeck"/>
-    <new-deck-modal v-if="Modals.createDeck"/>
+    <card-form-modal  v-if="Modals.createCard" />
+    <export-deck-modal v-if="Modals.exportDeck" />
+    <new-deck-modal v-if="Modals.createDeck" />
+    <edit-deck-modal v-if="Modals.editDeck" />
+    <delete-deck-modal v-if="Modals.deleteDeck" />
+    <copy-move-modal v-if="Modals.copyCard"  />
+    <delete-card-modal v-if="Modals.deleteCard" />
   </div>
 </template>
 
 <script>
-import DeleteCardModal from './components/Card/deleteCardModal'
 import CardFormModal from './components/Card/cardFormModal'
-import CopyMoveModal from './components/Card/copyMoveModal'
 import NewDeckModal from './components/Deck/newDeckModal'
 import ExportDeckModal from './components/Deck/exportDeckModal'
 import EditDeckModal from './components/Deck/editDeckModal'
 import DeleteDeckModal from './components/Deck/deleteDeckModal'
+import CopyMoveModal from './components/Card/copyMoveModal'
+import DeleteCardModal from './components/Card/deleteCardModal'
 
 import { IS_MODAL_OPEN } from './graphql/resolvers'
 
 export default {
   name: 'app',
   components: {
-    'delete-card-modal': DeleteCardModal,
     'card-form-modal': CardFormModal,
-    'copy-move-modal': CopyMoveModal,
     'new-deck-modal': NewDeckModal,
     'export-deck-modal': ExportDeckModal,
     'edit-deck-modal': EditDeckModal,
     'delete-deck-modal': DeleteDeckModal,
+    'delete-card-modal': DeleteCardModal,
+    'copy-move-modal': CopyMoveModal,
   },
   data () {
     return {
@@ -37,7 +42,7 @@ export default {
     Modals: {
       query: IS_MODAL_OPEN,
     },
-  }
+  },
 }
 
 </script>

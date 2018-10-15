@@ -5,7 +5,13 @@ export const typeDefs = `
 
   type Modals {
     exportDeck: Boolean,
-    createDeck: Boolean
+    createDeck: Boolean,
+    addCard: Boolean,
+    editDeck: Boolean,
+    deleteDeck: Boolean,
+    createCard:  Boolean,
+    copyCard: Boolean,
+    deleteCard: Boolean,
   }
 
   type NewAccountPage {

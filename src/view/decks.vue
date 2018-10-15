@@ -33,7 +33,7 @@ export default {
   name: 'decks',
   components: {
     'deck-row': DeckRow,
-    'navigation': Navigation
+    'navigation': Navigation,
   },
   methods: {
     toggleModal(modalName) {

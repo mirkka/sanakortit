@@ -7,15 +7,31 @@
     </div>
     <div class="col-sm-12 col-xs-12 py-3">
       <router-link to="/study" tag="button" class="btn btn-secondary mr-2">Study</router-link>
-      <button type="button" class="btn btn-outline-secondary mr-2">Add card</button>
-      <button type="button" class="btn btn-outline-secondary mr-2">Edit</button>
-      <button type="button" class="btn btn-outline-secondary">Delete</button>
+      <button type="button" class="btn btn-outline-secondary mr-2" @click="toggleModal('createCard')">Add card</button>
+      <button type="button" class="btn btn-outline-secondary mr-2" @click="toggleModal('editDeck')">Edit</button>
+      <button type="button" class="btn btn-outline-secondary" @click="toggleModal('deleteDeck')">Delete</button>
     </div>
   </div>
 </template>
 
 <script>
+  import gql from 'graphql-tag'
+
   export default {
-    name: 'deckRow'
+    name: 'deckRow',
+    methods: {
+      toggleModal(modalName) {
+        this.$apollo.mutate({
+          mutation: gql`
+            mutation($modalName: String) {
+              toggleModal (modalName: $modalName) @client
+            }
+          `,
+          variables: {
+            modalName
+          }
+        })
+      }
+    }
   }
 </script>

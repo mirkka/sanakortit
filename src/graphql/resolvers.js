@@ -4,6 +4,12 @@ export const defaults = {
   Modals: {
     exportDeck: false,
     createDeck: false,
+    addCard: false,
+    editDeck: false,
+    deleteDeck: false,
+    createCard:  false,
+    copyCard: false,
+    deleteCard: false,
     __typename: 'Modals',
   },
   NewAccountPage: {
@@ -16,7 +22,13 @@ export const IS_MODAL_OPEN = gql`
   query {
     Modals @client {
       exportDeck,
-      createDeck
+      createDeck,
+      addCard,
+      editDeck,
+      deleteDeck,
+      createCard,
+      copyCard,
+      deleteCard,
     }
   }
 `

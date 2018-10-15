@@ -6,10 +6,10 @@
         <div class="modal-content">
           <div class="modal-header">
             <h4 class="modal-title"><i class="fa fa-file-alt"></i> Edit card</h4>
-            <button type="button" class="close">
+            <button type="button" class="close" @click="toggleModal('createCard')">
               <span>&times;</span>
               <span class="sr-only">Close</span>
-              </button>
+            </button>
           </div>
           <div class="modal-body">
             <strong>Deck: </strong>
@@ -27,7 +27,7 @@
               <span class="deckName">Deck1</span>
             </div> -->
             <hr />
-            <div class="disclaimer">
+            <!-- <div class="disclaimer">
               <div>
                 <strong>This card is a duplicity</strong><br/>
                 <strong>Deck:</strong> <span>test</span><br/>
@@ -40,7 +40,7 @@
                 <span class="mx-2">or delete original card</span>
                 <button class="btn btn-secondary btn-sm">Delete</button>
               </div>
-            </div>
+            </div> -->
             <div class="form-group">
               <label class="control-label">Front</label>
               <textarea class="form-control" tabindex="1"></textarea>
@@ -58,12 +58,13 @@
                 <button type="button" class="btn btn-secondary mr-2" title="Switch card sides">
                   <i class="fa fa-exchange-alt"></i>
                 </button>
+                <!-- TODO: routerl link -->
                 <a href="./browser.html" target="_blank" role="button" class="btn btn-outline-secondary" title="Browse deck">
                   <i class="fa fa-globe-americas"></i>
                 </a>
               </div>
               <div>
-                <button type="button" class="btn btn-outline-secondary mr-2">Close</button>
+                <button type="button" class="btn btn-outline-secondary mr-2" @click="toggleModal('createCard')">Close</button>
                 <button type="button" class="btn btn-secondary" tabindex="4">Save</button>
               </div>
             </div>
@@ -75,8 +76,23 @@
 </template>
 
 <script>
+import gql from 'graphql-tag' 
 
 export default {
   name: 'cardFormModal',
+  methods: {
+    toggleModal(modalName) {
+      this.$apollo.mutate({
+        mutation: gql`
+          mutation($modalName: String) {
+            toggleModal (modalName: $modalName) @client
+          }
+        `,
+        variables: {
+          modalName
+        }
+      })
+    }
+  }
 }
 </script>

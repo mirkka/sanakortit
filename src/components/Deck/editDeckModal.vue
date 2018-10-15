@@ -6,7 +6,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h4 class="modal-title">Options</h4>
-            <button type="button" class="close">
+            <button type="button" class="close" @click="toggleModal('editDeck')">
               <span>&times;</span>
               <span class="sr-only">Close</span>
             </button>
@@ -28,7 +28,7 @@
           </div>
 
           <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary">Discard</button>
+            <button type="button" class="btn btn-outline-secondary" @click="toggleModal('editDeck')">Discard</button>
             <button type="button" class="btn btn-secondary">Save</button>
           </div>
         </div>
@@ -39,8 +39,23 @@
 
 
 <script>
+import gql from 'graphql-tag'
 
 export default {
   name: 'editDeckModal',
+  methods: {
+    toggleModal(modalName) {
+      this.$apollo.mutate({
+        mutation: gql`
+          mutation($modalName: String) {
+            toggleModal (modalName: $modalName) @client
+          }
+        `,
+        variables: {
+          modalName
+        }
+      })
+    }
+  }
 }
 </script>

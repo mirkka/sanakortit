@@ -6,7 +6,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h4 class="modal-title">Delete card</h4>
-            <button type="button" class="close">
+            <button type="button" class="close" @click="toggleModal('deleteCard')">
               <span>&times;</span><span class="sr-only"></span>
             </button>
           </div>
@@ -16,8 +16,8 @@
           </div>
 
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-            <button type="button" class="btn btn-danger" id="delete">Delete</button>
+            <button type="button" class="btn btn-default" @click="toggleModal('deleteCard')">Cancel</button>
+            <button type="button" class="btn btn-danger">Delete</button>
           </div>
         </div>
       </div>
@@ -26,8 +26,23 @@
 </template>
 
 <script>
+import gql from 'graphql-tag'
 
 export default {
   name: 'deleteCardModal',
+  methods: {
+    toggleModal(modalName) {
+      this.$apollo.mutate({
+        mutation: gql`
+          mutation($modalName: String) {
+            toggleModal (modalName: $modalName) @client
+          }
+        `,
+        variables: {
+          modalName
+        }
+      })
+    }
+  }
 }
 </script>
