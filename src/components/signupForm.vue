@@ -29,20 +29,10 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
+import { toggleNewAccountPage } from '../methods.js'
 
 export default {
   name: 'signupForm',
-    methods: {
-    toggleNewAccountPage() {
-      this.$apollo.mutate({
-        mutation: gql`
-          mutation($empty: String) {
-            toggleNewAccountPage (empty: $empty) @client
-          }
-        `
-      })
-    }
-  }
+  methods: { toggleNewAccountPage }
 }
 </script>

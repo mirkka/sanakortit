@@ -13,3 +13,13 @@ export const toggleModal = modalName => {
     }
   })
 }
+
+export const toggleNewAccountPage = () => {
+  apollo.mutate({
+    mutation: gql`
+      mutation($empty: String) {
+        toggleNewAccountPage (empty: $empty) @client
+      }
+    `
+  })
+}
