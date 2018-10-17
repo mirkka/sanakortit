@@ -15,6 +15,23 @@ export const defaults = {
   NewAccountPage: {
     isVisible: false,
     __typename: 'NewAccountPage'
+  },
+  Deck: {
+    id: 1,
+    name: '',
+    due: null,
+    cardAmount: null,
+    __typename: 'Deck'
+  },
+  Decks: {
+    items:{
+      id: 1,
+      name: '',
+      due: null,
+      cardAmount: null,
+      __typename: 'deck'
+    },
+    __typename: 'Decks'
   }
 };
 
@@ -36,6 +53,29 @@ export const NEW_ACCOUNT_PAGE = gql`
   query {
     NewAccountPage @client {
       isVisible
+    }
+  }
+`
+
+export const GET_DECK = gql`
+  query GetDeck($id: ID!) {
+    getDeck(id: $id) {
+      id
+      name
+      due
+      cardAmount
+    }
+  }
+`
+export const LIST_DECKS = gql`
+  query {
+    listDecks {
+      items {
+        id
+        name
+        due
+        cardAmount
+      }
     }
   }
 `

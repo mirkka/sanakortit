@@ -28,6 +28,7 @@
 import DeckRow from '../components/deckRow.vue'
 import Navigation from '../components/nav.vue'
 import { toggleModal } from '../methods.js'
+import { LIST_DECKS }  from '../graphql/resolvers'
 
 export default {
   name: 'decks',
@@ -35,6 +36,16 @@ export default {
     'deck-row': DeckRow,
     'navigation': Navigation,
   },
-  methods: { toggleModal }
+  methods: { toggleModal },
+  data () {
+    return {
+      Decks: []
+    }
+  },
+  apollo: {
+    listDecks: {
+      query: LIST_DECKS,
+    }
+  }
 }
 </script>

@@ -18,6 +18,17 @@ export const typeDefs = `
     isVisible: Boolean
   }
 
+  type Deck {
+    id: ID,
+    name: String,
+    due: Int,
+    cardAmount: Int,
+  }
+
+  type Decks {
+    items { Deck }
+  }
+
   type Mutation {
     toggleModal (modalName: string): Modals,
     toggleNewAccountPage (empty: String): null,
@@ -26,5 +37,7 @@ export const typeDefs = `
   type Query {
     Modals (): Modals,
     NewAccountPage (): NewAccountPage,
+    GetDeck (id: !ID): Deck
+    GetDecks (): Decks
   }
 `;
