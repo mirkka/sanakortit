@@ -44,3 +44,10 @@ export const LIST_DECKS = gql`
     }
   }
 `
+export const NEW_DECK_NAME = gql`
+  query {
+    NewDeckName {
+      name
+    }
+  }
+`

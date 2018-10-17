@@ -27,8 +27,12 @@ export default {
       name: '',
       due: null,
       cardAmount: null,
-      __typename: 'deck'
+      __typename: 'Deck'
     },
     __typename: 'Decks'
+  },
+  NewDeckName: {
+    name: '',
+    __typename: 'NewDeckName'
   }
 };

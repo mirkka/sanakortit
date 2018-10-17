@@ -15,13 +15,13 @@
           <div class="modal-body p-3">
             <div class="form-group">
               <label class="control-label">Name:</label>
-              <input type="text" class="form-control" id="deck-name">
+              <input type="text" class="form-control" id="deck-name" v-model="NewDeckName.name">
             </div>
           </div>
 
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary" @click="toggleModal('createDeck')">Close</button>
-            <button type="button" class="btn btn-secondary">Save</button>
+            <button type="button" class="btn btn-secondary" @click="createDeck({name: NewDeckName.name})">Save</button>
           </div>
         </div>
       </div>
@@ -31,10 +31,21 @@
 
 
 <script>
-import { toggleModal } from '../../methods.js'
+import { toggleModal, createDeck, setNewDeckName } from '../../methods'
+import { NEW_DECK_NAME } from '../../graphql/queries'
 
 export default {
   name: 'newDeckModal',
-  methods: { toggleModal }
+  methods: { toggleModal, createDeck, setNewDeckName },
+  data () {
+    return {
+      NewDeckName: {}
+    }
+  },
+  apollo: {
+    NewDeckName: {
+      query: NEW_DECK_NAME,
+    }
+  }
 }
 </script>

@@ -1,4 +1,4 @@
-import {IS_MODAL_OPEN, NEW_ACCOUNT_PAGE} from "./queries";
+import {IS_MODAL_OPEN, NEW_ACCOUNT_PAGE, NEW_DECK_NAME} from "./queries";
 
 export default {
   Mutation: {
@@ -19,6 +19,14 @@ export default {
 
       cache.writeData({ data });
       return  null;
-    }
+    },
+    setNewDeckName: (_, name, {  cache }) => {
+      const data = cache.readQuery({ query: NEW_DECK_NAME });
+
+      data.NewDeckName.name = name;
+
+      cache.writeData({ data });
+      return  name;
+    },
   },
 };

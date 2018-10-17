@@ -23,3 +23,33 @@ export const toggleNewAccountPage = () => {
     `
   })
 }
+
+export const createDeck = input => {
+  apollo.mutate({
+    mutation: gql`
+      mutation($input: CreateDeckInput) {
+        createDeck(input: $input) {
+          name,
+        }
+      }
+    `,
+    variables: {
+      input
+    }
+  })
+}
+
+export const setNewDeckName = name => {
+  apollo.mutate({
+    mutation: gql`
+      mutation($name: String) {
+        setNewDeckName(name: $name) {
+          name,
+        }
+      }
+    `,
+    variables: {
+      name
+    }
+  })
+}

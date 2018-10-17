@@ -25,7 +25,7 @@
 <script>
 
 import DeckRow from '../components/deckRow.vue'
-import { toggleModal } from '../methods.js'
+import { toggleModal, createDeck } from '../methods.js'
 import { LIST_DECKS }  from '../graphql/queries'
 
 export default {
