@@ -27,7 +27,7 @@ import FinishStudyModal from './components/finishStudyModal'
 
 import Navigation from './components/nav'
 
-import { IS_MODAL_OPEN } from './graphql/resolvers'
+import { IS_MODAL_OPEN } from './graphql/queries'
 
 export default {
   name: 'app',

@@ -26,7 +26,7 @@
 
 import DeckRow from '../components/deckRow.vue'
 import { toggleModal } from '../methods.js'
-import { LIST_DECKS }  from '../graphql/resolvers'
+import { LIST_DECKS }  from '../graphql/queries'
 
 export default {
   name: 'decks',

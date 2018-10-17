@@ -2,7 +2,8 @@ import { ApolloClient } from 'apollo-client'
 import { withClientState } from 'apollo-link-state'
 import { ApolloLink } from 'apollo-link'
 import { InMemoryCache } from 'apollo-cache-inmemory'
-import { defaults, resolvers } from "./graphql/resolvers";
+import resolvers from "./graphql/resolvers";
+import defaults from "./graphql/defaults";
 import { typeDefs } from "./graphql/schema";
 
 import { createAppSyncLink } from "aws-appsync";

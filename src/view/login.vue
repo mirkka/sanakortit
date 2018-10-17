@@ -9,7 +9,7 @@
 
 import LoginForm from '../components/loginForm.vue'
 import SignupForm from '../components/signupForm.vue'
-import { NEW_ACCOUNT_PAGE }  from '../graphql/resolvers'
+import { NEW_ACCOUNT_PAGE }  from '../graphql/queries'
 
 export default {
   name: 'login',
