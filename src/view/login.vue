@@ -1,8 +1,5 @@
 <template>
-  <div class="container mt-3 mb-3">
-    <div class="row header">
-      <div class="p-3 col-xs-3 text-uppercase"><strong>Sanakortit</strong></div>
-    </div>
+  <div>
     <login-form v-if="!NewAccountPage.isVisible"/>
     <signup-form v-if="NewAccountPage.isVisible"/>
   </div>

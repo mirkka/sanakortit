@@ -1,6 +1,5 @@
 <template>
-  <div class="container mt-3 mb-3">
-    <navigation />
+  <div>
     <div class="row">
       <div class="col-sm-3 pt-2 row d-flex flex-column">
         <div class="border-bottom">
@@ -75,7 +74,6 @@
 </template>
 
 <script>
-import Navigation from '../components/nav.vue'
 import SearchResult from '../components/searchResult.vue'
 
 import { toggleModal } from '../methods.js'
@@ -84,7 +82,6 @@ export default {
   name: 'browse',
   methods: { toggleModal },
   components: {
-    'navigation': Navigation,
     'search-result': SearchResult,
   }
 }

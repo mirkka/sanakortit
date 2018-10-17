@@ -1,6 +1,5 @@
 <template>
-  <div class="container mt-3 mb-3">
-    <navigation />
+  <div>
     <div class="d-flex mt-2">
       <div class="col-sm-9 col-xs-7"><strong>Deck</strong>
       </div>
@@ -26,7 +25,6 @@
 <script>
 
 import DeckRow from '../components/deckRow.vue'
-import Navigation from '../components/nav.vue'
 import { toggleModal } from '../methods.js'
 import { LIST_DECKS }  from '../graphql/resolvers'
 
@@ -34,7 +32,6 @@ export default {
   name: 'decks',
   components: {
     'deck-row': DeckRow,
-    'navigation': Navigation,
   },
   methods: { toggleModal },
   data () {

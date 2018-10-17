@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <router-view></router-view>
+    <div class="container mt-3 mb-3">
+      <navigation />
+      <router-view></router-view>
+    </div>
     <card-form-modal  v-if="Modals.createCard" />
     <export-deck-modal v-if="Modals.exportDeck" />
     <new-deck-modal v-if="Modals.createDeck" />
@@ -8,6 +11,7 @@
     <delete-deck-modal v-if="Modals.deleteDeck" />
     <copy-move-modal v-if="Modals.copyCard"  />
     <delete-card-modal v-if="Modals.deleteCard" />
+    <finish-study-modal v-if="false" />
   </div>
 </template>
 
@@ -19,6 +23,9 @@ import EditDeckModal from './components/Deck/editDeckModal'
 import DeleteDeckModal from './components/Deck/deleteDeckModal'
 import CopyMoveModal from './components/Card/copyMoveModal'
 import DeleteCardModal from './components/Card/deleteCardModal'
+import FinishStudyModal from './components/finishStudyModal'
+
+import Navigation from './components/nav'
 
 import { IS_MODAL_OPEN } from './graphql/resolvers'
 
@@ -32,6 +39,8 @@ export default {
     'delete-deck-modal': DeleteDeckModal,
     'delete-card-modal': DeleteCardModal,
     'copy-move-modal': CopyMoveModal,
+    'finish-study-modal': FinishStudyModal,
+    'navigation': Navigation,
   },
   data () {
     return {
