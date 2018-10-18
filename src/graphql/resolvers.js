@@ -1,4 +1,4 @@
-import {IS_MODAL_OPEN, NEW_ACCOUNT_PAGE, NEW_DECK_NAME} from "./queries";
+import {IS_MODAL_OPEN, NEW_ACCOUNT_PAGE, ACTIVE_DECK} from "./queries";
 
 export default {
   Mutation: {
@@ -20,13 +20,13 @@ export default {
       cache.writeData({ data });
       return  null;
     },
-    setNewDeckName: (_, name, {  cache }) => {
-      const data = cache.readQuery({ query: NEW_DECK_NAME });
+    setActiveDeck: (_, { id }, { cache }) => {
+      const data = cache.readQuery({ query: ACTIVE_DECK });
 
-      data.NewDeckName.name = name;
+      data.ActiveDeck.id = data.ActiveDeck.id !== id ? id : '';
 
       cache.writeData({ data });
-      return  name;
-    },
+      return id;
+    }
   },
 };

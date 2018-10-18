@@ -34,5 +34,9 @@ export default {
   NewDeckName: {
     name: '',
     __typename: 'NewDeckName'
+  },
+  ActiveDeck: {
+    id: '',
+    __typename: 'ActiveDeck'
   }
 };

@@ -18,16 +18,21 @@ export const typeDefs = `
     isVisible: Boolean
   }
 
+  type ActiveDeck {
+    id: String,
+  }
+
   type Mutation {
     toggleModal (modalName: string): Modals,
     toggleNewAccountPage (empty: String): null,
-    setNewDeckName (name: String): String,
+    setActiveDeck (id: String): String
   }
 
   type Query {
     Modals (): Modals,
     NewAccountPage (): NewAccountPage,
     NewDeckName (): NewDeckName,
+    ActiveDeck (): ActiveDeck
   }
 
   type NewDeckName {

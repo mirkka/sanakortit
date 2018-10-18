@@ -22,6 +22,14 @@ export const NEW_ACCOUNT_PAGE = gql`
   }
 `
 
+export const ACTIVE_DECK = gql`
+  query {
+    ActiveDeck @client {
+      id
+    }
+  }
+`
+
 export const GET_DECK = gql`
   query GetDeck($id: ID!) {
     getDeck(id: $id) {

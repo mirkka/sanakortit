@@ -8,9 +8,7 @@
       <div class="col-sm-1 col-xs-3"><strong>Total</strong>
       </div>
     </div>
-    <deck-row />
-    <deck-row />
-    <deck-row />
+    <deck-row v-for="deck in listDecks.items" :key="deck.id" :id="deck.id" :due="deck.due" :name="deck.name"/>
     <div class="col-xs-12 border-top mt-3 pt-3 pb-4 d-flex">
       <button type="button" class="btn btn-outline-secondary mr-2" @click="toggleModal('createDeck')">
         <i class="fa fa-plus"></i> Create deck
@@ -25,7 +23,7 @@
 <script>
 
 import DeckRow from '../components/deckRow.vue'
-import { toggleModal, createDeck } from '../methods.js'
+import { toggleModal } from '../methods.js'
 import { LIST_DECKS }  from '../graphql/queries'
 
 export default {
@@ -36,7 +34,7 @@ export default {
   methods: { toggleModal },
   data () {
     return {
-      Decks: []
+      listDecks: []
     }
   },
   apollo: {
