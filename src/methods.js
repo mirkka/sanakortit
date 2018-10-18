@@ -38,18 +38,3 @@ export const createDeck = input => {
     }
   })
 }
-
-export const setNewDeckName = name => {
-  apollo.mutate({
-    mutation: gql`
-      mutation($name: String) {
-        setNewDeckName(name: $name) {
-          name,
-        }
-      }
-    `,
-    variables: {
-      name
-    }
-  })
-}

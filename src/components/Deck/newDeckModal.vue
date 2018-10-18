@@ -31,12 +31,12 @@
 
 
 <script>
-import { toggleModal, createDeck, setNewDeckName } from '../../methods'
+import { toggleModal, createDeck } from '../../methods'
 import { NEW_DECK_NAME } from '../../graphql/queries'
 
 export default {
   name: 'newDeckModal',
-  methods: { toggleModal, createDeck, setNewDeckName },
+  methods: { toggleModal, createDeck },
   data () {
     return {
       NewDeckName: {}
