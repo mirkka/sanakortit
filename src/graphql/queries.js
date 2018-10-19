@@ -26,6 +26,9 @@ export const ACTIVE_DECK = gql`
   query {
     ActiveDeck @client {
       id
+      name
+      due
+      cardAmount
     }
   }
 `

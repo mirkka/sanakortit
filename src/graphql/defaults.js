@@ -14,29 +14,15 @@ export default {
     isVisible: false,
     __typename: 'NewAccountPage'
   },
-  Deck: {
-    id: 1,
+  ActiveDeck: {
+    id: '',
     name: '',
     due: null,
     cardAmount: null,
-    __typename: 'Deck'
-  },
-  Decks: {
-    items:{
-      id: 1,
-      name: '',
-      due: null,
-      cardAmount: null,
-      __typename: 'Deck'
-    },
-    __typename: 'Decks'
+    __typename: 'ActiveDeck'
   },
   NewDeckName: {
     name: '',
     __typename: 'NewDeckName'
   },
-  ActiveDeck: {
-    id: '',
-    __typename: 'ActiveDeck'
-  }
 };

@@ -8,7 +8,7 @@
       <div class="col-sm-1 col-xs-3"><strong>Total</strong>
       </div>
     </div>
-    <deck-row v-for="deck in listDecks.items" :key="deck.id" :id="deck.id" :due="deck.due" :cards="deck.cardAmount" :name="deck.name"/>
+    <deck-row v-for="deck in listDecks.items" :key="deck.id" :deck="deck"/>
     <div class="col-xs-12 border-top mt-3 pt-3 pb-4 d-flex">
       <button type="button" class="btn btn-outline-secondary mr-2" @click="toggleModal('createDeck')">
         <i class="fa fa-plus"></i> Create deck

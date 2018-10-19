@@ -24,15 +24,15 @@ export const toggleNewAccountPage = () => {
   })
 }
 
-export const setActiveDeck = id => {
+export const setActiveDeck = ActiveDeck => {
   apollo.mutate({
     mutation: gql`
-      mutation($id: String) {
-        setActiveDeck(id: $id) @client
+      mutation($ActiveDeck: ActiveDeck) {
+        setActiveDeck(ActiveDeck: $ActiveDeck) @client
       }
     `,
     variables: {
-      id
+      ActiveDeck
     }
   })
 }
@@ -43,6 +43,21 @@ export const createDeck = input => {
       mutation($input: CreateDeckInput) {
         createDeck(input: $input) {
           name,
+        }
+      }
+    `,
+    variables: {
+      input
+    }
+  })
+}
+
+export const deleteDeck = input => {
+  apollo.mutate({
+    mutation: gql`
+      mutation($input: DeleteDeckInput) {
+        deleteDeck(input: $input) {
+          id,
         }
       }
     `,

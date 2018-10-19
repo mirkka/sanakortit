@@ -20,22 +20,21 @@ export const typeDefs = `
 
   type ActiveDeck {
     id: String,
+    name: String,
+    due: Number,
+    cardAmount: Number,
   }
 
   type Mutation {
     toggleModal (modalName: string): Modals,
     toggleNewAccountPage (empty: String): null,
-    setActiveDeck (id: String): String
+    setActiveDeck (deck: ActiveDeck): ActiveDeck,
   }
 
   type Query {
     Modals (): Modals,
     NewAccountPage (): NewAccountPage,
     NewDeckName (): NewDeckName,
-    ActiveDeck (): ActiveDeck
-  }
-
-  type NewDeckName {
-    name: String,
+    ActiveDeck (): Deck
   }
 `;

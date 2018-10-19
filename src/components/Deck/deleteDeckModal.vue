@@ -13,12 +13,12 @@
           </div>
 
           <div class="modal-body">
-            Do you really want to delete: <strong>deck name</strong> ?
+            Do you really want to delete: <strong>{{ActiveDeck.name}}</strong> ?
           </div>
 
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary" @click="toggleModal('deleteDeck')">Cancel</button>
-            <button type="button" class="btn btn-danger">Delete</button>
+            <button type="button" class="btn btn-danger" @click="deleteDeck({id: ActiveDeck.id})">Delete</button>
           </div>
         </div>
       </div>
@@ -27,10 +27,21 @@
 </template>
 
 <script>
-import { toggleModal } from '../../methods.js'
+import { toggleModal, deleteDeck } from '../../methods.js';
+import { ACTIVE_DECK } from '../../graphql/queries.js';
 
 export default {
   name: 'deleteDeckModal',
-  methods: { toggleModal }
+  methods: { toggleModal, deleteDeck },
+  data () {
+    return {
+      ActiveDeck: {}
+    }
+  },
+  apollo: {
+    ActiveDeck: {
+      query: ACTIVE_DECK,
+    }
+  }
 }
 </script>

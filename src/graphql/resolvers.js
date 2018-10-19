@@ -1,4 +1,5 @@
 import {IS_MODAL_OPEN, NEW_ACCOUNT_PAGE, ACTIVE_DECK} from "./queries";
+import defaults from './defaults';
 
 export default {
   Mutation: {
@@ -20,13 +21,14 @@ export default {
       cache.writeData({ data });
       return  null;
     },
-    setActiveDeck: (_, { id }, { cache }) => {
+    setActiveDeck: (_, { ActiveDeck }, { cache }) => {
       const data = cache.readQuery({ query: ACTIVE_DECK });
-
-      data.ActiveDeck.id = data.ActiveDeck.id !== id ? id : '';
-
+      const updatedActiveDeck = (data.ActiveDeck.id !== ActiveDeck.id) ? ActiveDeck : defaults.ActiveDeck;
+      
+      Object.assign(data.ActiveDeck, updatedActiveDeck)
+      
       cache.writeData({ data });
-      return id;
+      return updatedActiveDeck;
     }
   },
 };

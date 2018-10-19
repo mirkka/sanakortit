@@ -15,13 +15,13 @@
           <div class="modal-body p-3">
             <div class="form-group">
               <label class="control-label">Name:</label>
-              <input type="text" class="form-control" id="deck-name" v-model="NewDeckName.name">
+              <input type="text" class="form-control" id="deck-name" v-model="newDeckName.name">
             </div>
           </div>
 
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary" @click="toggleModal('createDeck')">Close</button>
-            <button type="button" class="btn btn-secondary" @click="createDeck({name: NewDeckName.name})">Save</button>
+            <button type="button" class="btn btn-secondary" @click="createDeck({name: newDeckName.name})">Save</button>
           </div>
         </div>
       </div>
@@ -38,7 +38,7 @@ export default {
   methods: { toggleModal, createDeck },
   data () {
     return {
-      NewDeckName: {}
+      newDeckName: {}
     }
   },
 }
