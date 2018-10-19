@@ -32,7 +32,6 @@
 
 <script>
 import { toggleModal, createDeck } from '../../methods'
-import { NEW_DECK_NAME } from '../../graphql/queries'
 
 export default {
   name: 'newDeckModal',
@@ -42,10 +41,5 @@ export default {
       NewDeckName: {}
     }
   },
-  apollo: {
-    NewDeckName: {
-      query: NEW_DECK_NAME,
-    }
-  }
 }
 </script>
