@@ -45,12 +45,17 @@ export default {
   data () {
     return {
       Modals: {},
+      hydrated: false
     }
   },
   apollo: {
     Modals: {
       query: IS_MODAL_OPEN,
     },
+  },
+  async mounted() {
+    await this.$apollo.provider.defaultClient.hydrated();
+    this.hydrated = true;
   },
 }
 

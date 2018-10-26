@@ -1,12 +1,10 @@
-import { ApolloClient } from 'apollo-client'
 import { withClientState } from 'apollo-link-state'
 import { ApolloLink } from 'apollo-link'
-import { InMemoryCache } from 'apollo-cache-inmemory'
 import resolvers from "./graphql/resolvers";
 import defaults from "./graphql/defaults";
 import { typeDefs } from "./graphql/schema";
 
-import { createAppSyncLink } from "aws-appsync";
+import AWSAppSyncClient, { createAppSyncLink, createLinkWithCache } from "aws-appsync";
 
 const appSyncLink = createAppSyncLink({
   url: "https://4rroxcbshzdf5iagmws2wasoje.appsync-api.eu-central-1.amazonaws.com/graphql",
@@ -16,19 +14,14 @@ const appSyncLink = createAppSyncLink({
     apiKey: process.env.VUE_APP_APPSYNC_API_KEY,
   },
 });
-const cache = new InMemoryCache()
 
-const stateLink = withClientState({
+const stateLink = createLinkWithCache(cache => withClientState({
   cache,
   defaults,
   resolvers,
   typeDefs,
-});
+}));
 
 const link = ApolloLink.from([stateLink, appSyncLink]);
 
-export default new ApolloClient({
-  link,
-  cache,
-  connectToDevTools: true,
-})
+export default new AWSAppSyncClient({}, { link });

@@ -55,3 +55,13 @@ export const LIST_DECKS = gql`
     }
   }
 `
+export const NEW_DECK_SUBSCRIPTION = gql`
+  subscription {
+    onCreateDeck {
+      id,
+      name,
+      due,
+      cardAmount
+    }
+  }
+`

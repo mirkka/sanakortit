@@ -24,7 +24,7 @@
 
 import DeckRow from '../components/deckRow.vue'
 import { toggleModal } from '../methods.js'
-import { LIST_DECKS }  from '../graphql/queries'
+import { LIST_DECKS, NEW_DECK_SUBSCRIPTION }  from '../graphql/queries'
 
 export default {
   name: 'decks',
@@ -40,7 +40,23 @@ export default {
   apollo: {
     listDecks: {
       query: LIST_DECKS,
-    }
+      subscribeToMore: {
+        document: NEW_DECK_SUBSCRIPTION,
+        updateQuery: ({ listDecks }, { subscriptionData }) => {
+          const { __typename, items: prevItems } = listDecks
+
+          return {
+            listDecks: {
+              __typename,
+              items: [
+                ...prevItems,
+                subscriptionData.data.onCreateDeck,
+              ]
+            }
+          }
+        }
+      },
+    },
   }
 }
 </script>

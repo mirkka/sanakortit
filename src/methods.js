@@ -43,6 +43,9 @@ export const createDeck = input => {
       mutation($input: CreateDeckInput) {
         createDeck(input: $input) {
           name,
+          id,
+          due,
+          cardAmount
         }
       }
     `,
