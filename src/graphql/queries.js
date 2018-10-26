@@ -65,3 +65,10 @@ export const NEW_DECK_SUBSCRIPTION = gql`
     }
   }
 `
+export const DELETE_DECK_SUBSCRIPTION = gql`
+  subscription {
+    onDeleteDeck {
+      id,
+    }
+  }
+`
