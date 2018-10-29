@@ -18,7 +18,7 @@
 
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary" @click="toggleModal('deleteDeck')">Cancel</button>
-            <button type="button" class="btn btn-danger" @click="deleteDeck({id: ActiveDeck.id})">Delete</button>
+            <button type="button" class="btn btn-danger" @click="handleDeleteDeck({id: ActiveDeck.id})">Delete</button>
           </div>
         </div>
       </div>
@@ -32,10 +32,16 @@ import { ACTIVE_DECK } from '../../graphql/queries.js';
 
 export default {
   name: 'deleteDeckModal',
-  methods: { toggleModal, deleteDeck },
   data () {
     return {
       ActiveDeck: {}
+    }
+  },
+  methods: {
+    toggleModal,
+    handleDeleteDeck: async function(deckID) {
+      await this.toggleModal('deleteDeck');
+      await deleteDeck(deckID);
     }
   },
   apollo: {
