@@ -69,3 +69,24 @@ export const deleteDeck = input => {
     }
   })
 }
+
+export const createCard = input => {
+  apollo.mutate({
+    mutation: gql`
+      mutation($input: CreateCardInput) {
+        createCard(input: $input) {
+          front
+	        back
+	        level
+	        tags
+	        weight
+          deckId
+          id
+        }
+      }
+    `,
+    variables: {
+      input
+    }
+  })
+}

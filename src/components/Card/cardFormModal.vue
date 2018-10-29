@@ -43,15 +43,15 @@
             </div> -->
             <div class="form-group">
               <label class="control-label">Front</label>
-              <textarea class="form-control" tabindex="1"></textarea>
+              <textarea class="form-control" tabindex="1" v-model="newCard.front"></textarea>
             </div>
             <div class="form-group">
               <label class="control-label">Back</label>
-              <textarea class="form-control" tabindex="2"></textarea>
+              <textarea class="form-control" tabindex="2" v-model="newCard.back"></textarea>
             </div>
             <div class="form-group">
               <label class="control-label">Tags</label>
-              <input type="text" class="form-control" tabindex="3">
+              <input type="text" class="form-control" tabindex="3" v-model="newCard.tags">
             </div>
             <div class="modal-footer d-flex justify-content-between">
               <div>
@@ -64,7 +64,7 @@
               </div>
               <div>
                 <button type="button" class="btn btn-outline-secondary mr-2" @click="toggleModal('createCard')">Close</button>
-                <button type="button" class="btn btn-secondary" tabindex="4">Save</button>
+                <button type="button" class="btn btn-secondary" tabindex="4" @click="handleCreateCard(newCard)">Save</button>
               </div>
             </div>
           </div>
@@ -75,10 +75,28 @@
 </template>
 
 <script>
-import { toggleModal } from '../../methods.js'
+import { toggleModal, createCard } from '../../methods.js'
 
 export default {
   name: 'cardFormModal',
-  methods: { toggleModal }
+  methods: { 
+    toggleModal, 
+    createCard,
+    handleCreateCard: async function(formData) {
+      const newCard = {
+        front: formData.front,
+        back: formData.back,
+        level: 1,
+        tags: formData.tags.split(','),
+        deckId: '14b8475f-407e-49c9-b7b6-79646fee32a3',
+      } 
+      await createCard(newCard);
+    }
+  },
+  data () {
+    return {
+      newCard: {}
+    }
+  },
 }
 </script>
