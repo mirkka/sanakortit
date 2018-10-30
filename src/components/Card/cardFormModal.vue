@@ -61,7 +61,10 @@
             </div>
             <div class="modal-footer d-flex justify-content-between">
               <div>
-                <button type="button" class="btn btn-secondary mr-2" title="Switch card sides">
+                <button type="button" 
+                        class="btn btn-secondary mr-2" 
+                        title="Switch card sides"
+                        @click="flipSides(newCard)">
                   <i class="fa fa-exchange-alt"></i>
                 </button>
                 <router-link to="/browse" tag="button" class="btn btn-outline-secondary" @click.native="toggleModal('createCard')">
@@ -98,18 +101,27 @@ export default {
     toggleModal,
     createCard,
     setActiveDeck,
-    handleCreateCard: async function(formData) {
+    handleCreateCard: async function(cardData) {
       const newCard = {
-        front: formData.front,
-        back: formData.back,
+        front: cardData.front,
+        back: cardData.back,
         level: 1,
-        tags: formData.tags ? formData.tags.split(',') : [],
+        tags: cardData.tags ? cardData.tags.split(',') : [],
         deckId: this.ActiveDeck.id,
       } 
       await createCard(newCard);
     },
     toggleDropdown: function () {
       this.isExpanded = !this.isExpanded;
+    },
+    flipSides: function(cardData) {
+      const flippedCard = {
+        ...this.newCard,
+        front: cardData.back,
+        back: cardData.front
+      }
+
+      this.newCard = flippedCard
     }
   },
   apollo: {
