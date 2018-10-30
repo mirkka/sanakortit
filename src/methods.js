@@ -70,6 +70,24 @@ export const deleteDeck = input => {
   })
 }
 
+export const updateDeck = input => {
+  return apollo.mutate({
+    mutation: gql`
+      mutation($input: UpdateDeckInput) {
+        updateDeck(input: $input) {
+          name,
+          id,
+          due,
+          cardAmount
+        }
+      }
+    `,
+    variables: {
+      input
+    }
+  })
+}
+
 export const createCard = input => {
   return apollo.mutate({
     mutation: gql`

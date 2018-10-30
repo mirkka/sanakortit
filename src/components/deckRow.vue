@@ -8,7 +8,7 @@
     <div class="col-sm-12 col-xs-12 pb-2" v-if="isDeckExpanded">
       <router-link to="/study" tag="button" class="btn btn-secondary mr-2">Study</router-link>
       <button type="button" class="btn btn-outline-secondary mr-2" @click="$event.stopPropagation();toggleModal('createCard')">Add card</button>
-      <button type="button" class="btn btn-outline-secondary mr-2" @click="toggleModal('editDeck')">Edit</button>
+      <button type="button" class="btn btn-outline-secondary mr-2" @click="$event.stopPropagation();toggleModal('editDeck')">Edit</button>
       <button type="button" class="btn btn-outline-secondary" @click="$event.stopPropagation();toggleModal('deleteDeck')">Delete</button>
     </div>
   </div>

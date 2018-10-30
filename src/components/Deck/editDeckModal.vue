@@ -15,7 +15,7 @@
           <div class="modal-body">
             <div class="form-group">
               <label class="control-label">Rename:</label>
-              <input type="text" class="form-control">
+              <input type="text" class="form-control" v-model="newDeck.name">
             </div>
             <div class="form-group">
               <label class="control-label">Flip all cards:</label>
@@ -29,7 +29,9 @@
 
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary" @click="toggleModal('editDeck')">Discard</button>
-            <button type="button" class="btn btn-secondary">Save</button>
+            <button type="button" 
+                    class="btn btn-secondary"
+                    @click="handleUpdateDeck(newDeck.name)">Save</button>
           </div>
         </div>
       </div>
@@ -39,10 +41,45 @@
 
 
 <script>
-import { toggleModal } from '../../methods.js'
+import { toggleModal, updateDeck } from '../../methods.js'
+import { ACTIVE_DECK } from '../../graphql/queries.js';
 
 export default {
   name: 'editDeckModal',
-  methods: { toggleModal }
+  methods: { toggleModal,
+    handleUpdateDeck: async function (newDeckName) {
+      const deckToUpdate = {
+        name: newDeckName,
+        id: this.ActiveDeck.id
+      }
+      await updateDeck(deckToUpdate)
+      await toggleModal('editDeck');
+    }
+  },
+  data () {
+    return {
+      ActiveDeck: {}
+    }
+  },
+  computed: {
+    newDeck() {
+      if (this.ActiveDeck) {
+        return {
+          id: this.ActiveDeck.id,
+          name: this.ActiveDeck.name
+        }
+      } else {
+        return {
+          id: '',
+          name: ''
+        }
+      }
+    }
+  },
+  apollo: {
+    ActiveDeck: {
+      query: ACTIVE_DECK,
+    }
+  }
 }
 </script>
