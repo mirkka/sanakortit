@@ -12,15 +12,21 @@
             </button>
           </div>
           <div class="modal-body">
-            <strong>Deck: {{ActiveDeck.name}}</strong>
             <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button">
-                Dropdown button
-              </button>
-              <div class="dropdown-menu">
-                <div class="dropdown-item">Action</div>
-                <div class="dropdown-item">Another action</div>
-                <div class="dropdown-item">Something else here</div>
+              <strong>Deck:</strong>
+              <div>
+                <button class="btn btn-secondary dropdown-toggle" 
+                        type="button" 
+                        @click="toggleDropdown">
+                  {{ActiveDeck.name}}
+                </button>
+                <div class="dropdown-menu" :class="{ 'd-block': isExpanded }">
+                  <button class="dropdown-item pointer" 
+                       @click="setActiveDeck(deck)" 
+                       v-for="deck in listDecks.items" 
+                       :key="deck.id"
+                       :disabled="deck.id ===  ActiveDeck.id">{{deck.name}}</button>
+                </div>
               </div>
             </div>
             <!-- <div class="dropdown">
@@ -75,8 +81,8 @@
 </template>
 
 <script>
-import { toggleModal, createCard } from '../../methods.js'
-import { ACTIVE_DECK } from '../../graphql/queries.js'
+import { toggleModal, createCard, setActiveDeck } from '../../methods.js'
+import { ACTIVE_DECK, LIST_DECKS } from '../../graphql/queries.js'
 
 export default {
   name: 'cardFormModal',
@@ -84,11 +90,14 @@ export default {
     return {
       ActiveDeck: {},
       newCard: {},
+      listDecks: [],
+      isExpanded: false,
     }
   },
   methods: { 
-    toggleModal, 
+    toggleModal,
     createCard,
+    setActiveDeck,
     handleCreateCard: async function(formData) {
       const newCard = {
         front: formData.front,
@@ -98,11 +107,17 @@ export default {
         deckId: this.ActiveDeck.id,
       } 
       await createCard(newCard);
+    },
+    toggleDropdown: function () {
+      this.isExpanded = !this.isExpanded;
     }
   },
   apollo: {
     ActiveDeck: {
       query: ACTIVE_DECK,
+    },
+    listDecks: {
+      query: LIST_DECKS,
     }
   }
 }
