@@ -12,7 +12,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <strong>Deck: </strong>
+            <strong>Deck: {{ActiveDeck.name}}</strong>
             <div class="dropdown">
               <button class="btn btn-secondary dropdown-toggle" type="button">
                 Dropdown button
@@ -76,9 +76,16 @@
 
 <script>
 import { toggleModal, createCard } from '../../methods.js'
+import { ACTIVE_DECK } from '../../graphql/queries.js'
 
 export default {
   name: 'cardFormModal',
+  data () {
+    return {
+      ActiveDeck: {},
+      newCard: {},
+    }
+  },
   methods: { 
     toggleModal, 
     createCard,
@@ -88,15 +95,15 @@ export default {
         back: formData.back,
         level: 1,
         tags: formData.tags.split(','),
-        deckId: '14b8475f-407e-49c9-b7b6-79646fee32a3',
+        deckId: this.ActiveDeck.id,
       } 
       await createCard(newCard);
     }
   },
-  data () {
-    return {
-      newCard: {}
+  apollo: {
+    ActiveDeck: {
+      query: ACTIVE_DECK,
     }
-  },
+  }
 }
 </script>

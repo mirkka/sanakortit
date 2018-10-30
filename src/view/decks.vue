@@ -74,7 +74,6 @@ export default {
         {
           document: CREATE_CARD_SUBSCRIPTION,
           updateQuery: ({ listDecks }, { subscriptionData }) => {
-            const { __typename } = listDecks;
             const deckId = subscriptionData.data.onCreateCard.deckId
 
             const updatedDeck = listDecks.items.find(deck => deck.id === deckId);
