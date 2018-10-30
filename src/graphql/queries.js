@@ -72,3 +72,11 @@ export const DELETE_DECK_SUBSCRIPTION = gql`
     }
   }
 `
+
+export const CREATE_CARD_SUBSCRIPTION = gql`
+  subscription {
+    onCreateCard {
+      deckId,
+    }
+  }
+`

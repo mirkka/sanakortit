@@ -24,7 +24,7 @@
 
 import DeckRow from '../components/deckRow.vue'
 import { toggleModal } from '../methods.js'
-import { LIST_DECKS, NEW_DECK_SUBSCRIPTION, DELETE_DECK_SUBSCRIPTION }  from '../graphql/queries'
+import { LIST_DECKS, NEW_DECK_SUBSCRIPTION, DELETE_DECK_SUBSCRIPTION, CREATE_CARD_SUBSCRIPTION }  from '../graphql/queries'
 
 export default {
   name: 'decks',
@@ -68,6 +68,20 @@ export default {
                 __typename,
                 items: updatedList
               }
+            }
+          }
+        },
+        {
+          document: CREATE_CARD_SUBSCRIPTION,
+          updateQuery: ({ listDecks }, { subscriptionData }) => {
+            const { __typename } = listDecks;
+            const deckId = subscriptionData.data.onCreateCard.deckId
+
+            const updatedDeck = listDecks.items.find(deck => deck.id === deckId);
+            updatedDeck.cardAmount = updatedDeck.cardAmount + 1;
+
+            return {
+              listDecks
             }
           }
         }
