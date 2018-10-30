@@ -20,7 +20,9 @@
             <div class="form-group">
               <label class="control-label">Flip all cards:</label>
               <div>
-                <button type="button" class="btn btn-secondary">
+                <button type="button" 
+                        class="btn btn-secondary"
+                        :disabled='ActiveDeck.cardAmount === 0'>
                   <i class="fa fa-exchange-alt"></i>
                 </button>
               </div>
