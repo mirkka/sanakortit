@@ -6,7 +6,13 @@ export default {
     toggleModal: (_, modalName, { cache }) => {
       const modals = cache.readQuery({ query: IS_MODAL_OPEN })
       const key = modalName.modalName;
-      modals.Modals[key] = !modals.Modals[key];
+
+      const newVal = !modals.Modals[key]
+
+      modals.Modals = { 
+        ...modals.Modals,
+        [ key ]: newVal
+      }
 
       const data = modals;
 

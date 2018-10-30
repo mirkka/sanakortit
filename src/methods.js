@@ -2,7 +2,7 @@ import gql from 'graphql-tag'
 import apollo from './apolloClient'
 
 export const toggleModal = modalName => {
-  apollo.mutate({
+  return apollo.mutate({
     mutation: gql`
       mutation($modalName: String) {
         toggleModal (modalName: $modalName) @client
@@ -15,7 +15,7 @@ export const toggleModal = modalName => {
 }
 
 export const toggleNewAccountPage = () => {
-  apollo.mutate({
+  return apollo.mutate({
     mutation: gql`
       mutation($empty: String) {
         toggleNewAccountPage (empty: $empty) @client
@@ -25,7 +25,7 @@ export const toggleNewAccountPage = () => {
 }
 
 export const setActiveDeck = ActiveDeck => {
-  apollo.mutate({
+  return apollo.mutate({
     mutation: gql`
       mutation($ActiveDeck: ActiveDeck) {
         setActiveDeck(ActiveDeck: $ActiveDeck) @client
@@ -38,7 +38,7 @@ export const setActiveDeck = ActiveDeck => {
 }
 
 export const createDeck = input => {
-  apollo.mutate({
+  return apollo.mutate({
     mutation: gql`
       mutation($input: CreateDeckInput) {
         createDeck(input: $input) {
@@ -56,7 +56,7 @@ export const createDeck = input => {
 }
 
 export const deleteDeck = input => {
-  apollo.mutate({
+  return apollo.mutate({
     mutation: gql`
       mutation($input: DeleteDeckInput) {
         deleteDeck(input: $input) {
@@ -71,7 +71,7 @@ export const deleteDeck = input => {
 }
 
 export const createCard = input => {
-  apollo.mutate({
+  return apollo.mutate({
     mutation: gql`
       mutation($input: CreateCardInput) {
         createCard(input: $input) {

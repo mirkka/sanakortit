@@ -39,9 +39,9 @@ export default {
   },
   methods: {
     toggleModal,
-    handleDeleteDeck: async function(deckID) {
-      await this.toggleModal('deleteDeck');
+    handleDeleteDeck: async deckID => {
       await deleteDeck(deckID);
+      await toggleModal('deleteDeck');
     }
   },
   apollo: {
