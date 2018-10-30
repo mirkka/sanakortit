@@ -94,7 +94,7 @@ export default {
       isExpanded: false,
     }
   },
-  methods: { 
+  methods: {
     toggleModal,
     createCard,
     setActiveDeck,
@@ -103,7 +103,7 @@ export default {
         front: formData.front,
         back: formData.back,
         level: 1,
-        tags: formData.tags.split(','),
+        tags: formData.tags ? formData.tags.split(',') : [],
         deckId: this.ActiveDeck.id,
       } 
       await createCard(newCard);
