@@ -11,7 +11,7 @@
             <button type="button" class="close" @click="toggleModal('copyCard')">
               <span>&times;</span>
               <span class="sr-only">Close</span>
-            </button>            
+            </button>
           </div>
           <div class="modal-body p-2">
             <div class="row">
