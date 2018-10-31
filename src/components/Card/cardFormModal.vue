@@ -15,17 +15,17 @@
             <div class="dropdown">
               <strong>Deck:</strong>
               <div>
-                <button class="btn btn-secondary dropdown-toggle" 
-                        type="button" 
+                <button class="btn btn-secondary dropdown-toggle"
+                        type="button"
                         @click="toggleDropdown">
-                  {{ActiveDeck.name}}
+                  {{newDeck.name}}
                 </button>
                 <div class="dropdown-menu" :class="{ 'd-block': isExpanded }">
-                  <button class="dropdown-item pointer" 
-                       @click="setActiveDeck(deck)" 
-                       v-for="deck in listDecks.items" 
+                  <button class="dropdown-item pointer"
+                       @click="setNewDeck(deck)"
+                       v-for="deck in listDecks.items"
                        :key="deck.id"
-                       :disabled="deck.id ===  ActiveDeck.id">{{deck.name}}</button>
+                       :disabled="deck.id ===  newDeck.id">{{deck.name}}</button>
                 </div>
               </div>
             </div>
@@ -41,7 +41,7 @@
                 <strong>Back:</strong> <span>test</span><br/>
               </div>
               <div>
-                <span class="mr-2">Delete and move to current deck</span> 
+                <span class="mr-2">Delete and move to current deck</span>
                 <button class="btn btn-secondary btn-sm">Move</button>
                 <span class="mx-2">or delete original card</span>
                 <button class="btn btn-secondary btn-sm">Delete</button>
@@ -61,8 +61,8 @@
             </div>
             <div class="modal-footer d-flex justify-content-between">
               <div>
-                <button type="button" 
-                        class="btn btn-secondary mr-2" 
+                <button type="button"
+                        class="btn btn-secondary mr-2"
                         title="Switch card sides"
                         @click="flipSides(newCard)">
                   <i class="fa fa-exchange-alt"></i>
@@ -93,8 +93,14 @@ export default {
     return {
       ActiveDeck: {},
       newCard: {},
+      newDeck: {},
       listDecks: [],
-      isExpanded: false,
+      isExpanded: false
+    }
+  },
+  mounted() {
+    if (this.ActiveDeck) {
+      this.newDeck = this.ActiveDeck
     }
   },
   methods: {
@@ -107,8 +113,8 @@ export default {
         back: cardData.back,
         level: 1,
         tags: cardData.tags ? cardData.tags.split(',') : [],
-        deckId: this.ActiveDeck.id,
-      } 
+        deckId: this.newDeck.id,
+      }
       await createCard(newCard);
     },
     toggleDropdown: function () {
@@ -122,6 +128,9 @@ export default {
       }
 
       this.newCard = flippedCard
+    },
+    setNewDeck: function(newDeck) {
+      this.newDeck = newDeck;
     }
   },
   apollo: {

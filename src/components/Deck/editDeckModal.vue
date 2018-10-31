@@ -6,7 +6,9 @@
         <div class="modal-content">
           <div class="modal-header">
             <h4 class="modal-title">Options</h4>
-            <button type="button" class="close" @click="toggleModal('editDeck')">
+            <button type="button"
+                    class="close"
+                    @click="toggleModal('editDeck')">
               <span>&times;</span>
               <span class="sr-only">Close</span>
             </button>
@@ -15,12 +17,14 @@
           <div class="modal-body">
             <div class="form-group">
               <label class="control-label">Rename:</label>
-              <input type="text" class="form-control" v-model="newDeck.name">
+              <input type="text"
+                     class="form-control"
+                     v-model="newDeck.name">
             </div>
             <div class="form-group">
               <label class="control-label">Flip all cards:</label>
               <div>
-                <button type="button" 
+                <button type="button"
                         class="btn btn-secondary"
                         :disabled='ActiveDeck.cardAmount === 0'>
                   <i class="fa fa-exchange-alt"></i>
@@ -30,8 +34,10 @@
           </div>
 
           <div class="modal-footer">
-            <button type="button" class="btn btn-outline-secondary" @click="toggleModal('editDeck')">Discard</button>
-            <button type="button" 
+            <button type="button"
+                    class="btn btn-outline-secondary"
+                    @click="toggleModal('editDeck')">Discard</button>
+            <button type="button"
                     class="btn btn-secondary"
                     @click="handleUpdateDeck(newDeck.name)">Save</button>
           </div>
@@ -44,7 +50,7 @@
 
 <script>
 import { toggleModal, updateDeck } from '../../methods.js'
-import { ACTIVE_DECK } from '../../graphql/queries.js';
+import { ACTIVE_DECK } from '../../graphql/queries.js'
 
 export default {
   name: 'editDeckModal',
@@ -55,26 +61,23 @@ export default {
         id: this.ActiveDeck.id
       }
       await updateDeck(deckToUpdate)
-      await toggleModal('editDeck');
+      await toggleModal('editDeck')
     }
   },
   data () {
     return {
-      ActiveDeck: {}
+      ActiveDeck: {},
+      newDeck: {
+        id: '',
+        name: ''
+      }
     }
   },
-  computed: {
-    newDeck() {
-      if (this.ActiveDeck) {
-        return {
-          id: this.ActiveDeck.id,
-          name: this.ActiveDeck.name
-        }
-      } else {
-        return {
-          id: '',
-          name: ''
-        }
+  mounted() {
+    if (this.ActiveDeck) {
+      this.newDeck = {
+        id: this.ActiveDeck.id,
+        name: this.ActiveDeck.name
       }
     }
   },
