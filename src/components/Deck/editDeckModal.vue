@@ -26,7 +26,8 @@
               <div>
                 <button type="button"
                         class="btn btn-secondary"
-                        :disabled='ActiveDeck.cardAmount === 0'>
+                        :disabled='ActiveDeck.cardAmount === 0'
+                        @click="flipAllCards({deckId: newDeck.id})">
                   <i class="fa fa-exchange-alt"></i>
                 </button>
               </div>
@@ -49,12 +50,13 @@
 
 
 <script>
-import { toggleModal, updateDeck } from '../../methods.js'
+import { toggleModal, updateDeck, flipAllCards } from '../../methods.js'
 import { ACTIVE_DECK } from '../../graphql/queries.js'
 
 export default {
   name: 'editDeckModal',
   methods: { toggleModal,
+    flipAllCards,
     handleUpdateDeck: async function (newDeckName) {
       const deckToUpdate = {
         name: newDeckName,

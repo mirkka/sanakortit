@@ -108,3 +108,18 @@ export const createCard = input => {
     }
   })
 }
+
+export const flipAllCards = input => {
+  return apollo.mutate({
+    mutation: gql`
+      mutation($input: UpdateCardsInput) {
+        updateCards(input: $input) {
+          id
+        }
+      }
+    `,
+    variables: {
+      input
+    }
+  })
+}
