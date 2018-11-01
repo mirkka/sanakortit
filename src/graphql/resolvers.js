@@ -9,7 +9,7 @@ export default {
 
       const newVal = !modals.Modals[key]
 
-      modals.Modals = { 
+      modals.Modals = {
         ...modals.Modals,
         [ key ]: newVal
       }
@@ -30,9 +30,9 @@ export default {
     setActiveDeck: (_, { ActiveDeck }, { cache }) => {
       const data = cache.readQuery({ query: ACTIVE_DECK });
       const updatedActiveDeck = (data.ActiveDeck.id !== ActiveDeck.id) ? ActiveDeck : defaults.ActiveDeck;
-      
+
       Object.assign(data.ActiveDeck, updatedActiveDeck)
-      
+
       cache.writeData({ data });
       return updatedActiveDeck;
     }
