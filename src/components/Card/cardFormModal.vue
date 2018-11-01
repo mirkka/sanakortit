@@ -22,10 +22,10 @@
                 </button>
                 <div class="dropdown-menu" :class="{ 'd-block': isExpanded }">
                   <button class="dropdown-item pointer"
-                       @click="setNewDeck(deck)"
-                       v-for="deck in listDecks.items"
-                       :key="deck.id"
-                       :disabled="deck.id ===  newDeck.id">{{deck.name}}</button>
+                          @click="setNewDeck(deck)"
+                          v-for="deck in listDecks.items"
+                          :key="deck.id"
+                          :disabled="deck.id ===  newDeck.id">{{deck.name}}</button>
                 </div>
               </div>
             </div>
@@ -67,13 +67,21 @@
                         @click="flipSides(newCard)">
                   <i class="fa fa-exchange-alt"></i>
                 </button>
-                <router-link to="/browse" tag="button" class="btn btn-outline-secondary" @click.native="toggleModal('createCard')">
+                <router-link to="/browse"
+                             tag="button"
+                             class="btn btn-outline-secondary"
+                             @click.native="toggleModal('createCard')">
                   <i class="fa fa-globe-americas"></i>
                 </router-link>
               </div>
               <div>
-                <button type="button" class="btn btn-outline-secondary mr-2" @click="toggleModal('createCard')">Close</button>
-                <button type="button" class="btn btn-secondary" tabindex="4" @click="handleCreateCard(newCard)">Save</button>
+                <button type="button"
+                        class="btn btn-outline-secondary mr-2"
+                        @click="toggleModal('createCard')">Close</button>
+                <button type="button"
+                        class="btn btn-secondary"
+                        tabindex="4"
+                        @click="handleCreateCard(newCard)">Save</button>
               </div>
             </div>
           </div>
