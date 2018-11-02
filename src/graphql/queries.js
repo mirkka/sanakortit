@@ -55,6 +55,19 @@ export const LIST_DECKS = gql`
     }
   }
 `
+export const GET_STUDY_CARD = gql`
+  query studyCard($id: ID){
+    studyCard(deckId: $id) {
+      front
+      back
+      level
+      tags
+      weight
+      id
+      deckId
+    }
+  }
+`
 export const NEW_DECK_SUBSCRIPTION = gql`
   subscription {
     onCreateDeck {

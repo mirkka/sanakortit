@@ -11,7 +11,7 @@ const routes = [
   { path: '/login', component: Login },
   { path: '/', component: Decks },
   { path: '/browse', component: Browse },
-  { path: '/study', component: Study },
+  { path: '/study/:deckId', component: Study },
 ]
 
 export default new VueRouter({

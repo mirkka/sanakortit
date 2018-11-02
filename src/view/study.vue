@@ -1,15 +1,18 @@
 <template>
   <div>
     <div class="d-flex flex-column study-card">
-      <textarea class="h1 text-center flex-grow-1 border-0 my-4 shadow-sm" disabled>front</textarea>
+      <textarea class="h1 text-center flex-grow-1 border-0 my-4 shadow-sm"
+                disabled
+                v-model="studyCard.front"/>
       <textarea class="h1 text-center flex-grow-1 border-0 shadow-sm"
                 disabled
-                v-if="showAnswer">back</textarea>
+                v-if="showAnswer"
+                v-model="studyCard.back"/>
     </div>
     <div class="mt-3">
       <div class="d-flex justify-content-between">
-        <span><strong>Due: {{ActiveDeck.due}}</strong></span>
-        <span>{{ActiveDeck.name}}</span>
+        <span><strong>Due: {{activeDeck.due}}</strong></span>
+        <span>{{activeDeck.name}}</span>
       </div>
 
       <div class="d-flex justify-content-center position-relative pt-3 pb-4">
@@ -40,14 +43,16 @@
 </template>
 
 <script>
-import { ACTIVE_DECK } from '../graphql/queries.js'
+import { ACTIVE_DECK, GET_STUDY_CARD } from '../graphql/queries.js'
+import { getStudyCard, getDeck } from '../methods'
 
 export default {
   name: 'study',
   data () {
     return {
-      ActiveDeck: {},
-      showAnswer: false
+      activeDeck: {},
+      showAnswer: false,
+      studyCard: {}
     }
   },
   methods: {
@@ -55,10 +60,13 @@ export default {
       this.showAnswer = !this.showAnswer;
     },
   },
-  apollo: {
-    ActiveDeck: {
-      query: ACTIVE_DECK,
-    }
-  }
+  async created() {
+    const [card,deck] = await Promise.all([
+      getStudyCard(this.$route.params.deckId),
+      getDeck(this.$route.params.deckId)
+    ])
+    this.studyCard = card.data.studyCard
+    this.activeDeck = deck.data.getDeck
+  },
 }
 </script>
