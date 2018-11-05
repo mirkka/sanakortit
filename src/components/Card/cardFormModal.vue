@@ -119,7 +119,6 @@ export default {
       const newCard = {
         front: cardData.front,
         back: cardData.back,
-        level: 1,
         tags: cardData.tags ? cardData.tags.split(',') : [],
         deckId: this.newDeck.id,
       }

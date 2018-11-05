@@ -96,9 +96,7 @@ export const createCard = input => {
         createCard(input: $input) {
           front
 	        back
-	        level
 	        tags
-	        weight
           deckId
           id
         }
