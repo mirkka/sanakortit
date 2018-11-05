@@ -23,7 +23,7 @@
 <script>
 
 import DeckRow from '../components/deckRow.vue'
-import { toggleModal } from '../methods.js'
+import { toggleModal, updateDeck } from '../methods.js'
 import { LIST_DECKS, NEW_DECK_SUBSCRIPTION, DELETE_DECK_SUBSCRIPTION, CREATE_CARD_SUBSCRIPTION }  from '../graphql/queries'
 
 export default {
@@ -75,9 +75,9 @@ export default {
           document: CREATE_CARD_SUBSCRIPTION,
           updateQuery: ({ listDecks }, { subscriptionData }) => {
             const deckId = subscriptionData.data.onCreateCard.deckId
-
             const updatedDeck = listDecks.items.find(deck => deck.id === deckId);
             updatedDeck.cardAmount = updatedDeck.cardAmount + 1;
+            updatedDeck.due = updatedDeck.due + 1;
 
             return {
               listDecks
