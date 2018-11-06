@@ -23,7 +23,7 @@
 <script>
 
 import DeckRow from '../components/deckRow.vue'
-import { toggleModal, updateDeck } from '../methods.js'
+import { toggleModal } from '../methods.js'
 import { LIST_DECKS, NEW_DECK_SUBSCRIPTION, DELETE_DECK_SUBSCRIPTION, CREATE_CARD_SUBSCRIPTION }  from '../graphql/queries'
 
 export default {

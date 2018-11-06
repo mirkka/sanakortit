@@ -26,11 +26,14 @@
                   v-if="!showAnswer">Show answer</button>
           <div v-if="showAnswer">
             <button type="button"
-                    class="btn btn-outline-secondary mr-4">
+                    class="btn btn-outline-secondary mr-4"
+                    @click="handleUpdateStudyCard('again')">
               <i class="fa fa-sync-alt"></i>
               Again
             </button>
-            <button type="button" class="btn btn-outline-secondary">
+            <button type="button"
+                    class="btn btn-outline-secondary"
+                    @click="handleUpdateStudyCard('good')">
               <i class="fa fa-check text-success"></i>
               Good
               (+<span>10 minutes</span>)
@@ -43,8 +46,7 @@
 </template>
 
 <script>
-import { ACTIVE_DECK, GET_STUDY_CARD } from '../graphql/queries.js'
-import { getStudyCard, getDeck } from '../methods'
+import { getStudyCard, getDeck, updateStudyCard } from '../methods'
 
 export default {
   name: 'study',
@@ -59,6 +61,17 @@ export default {
     toggleShowAnswer: function () {
       this.showAnswer = !this.showAnswer;
     },
+    handleUpdateStudyCard: async function (action) {
+      const cardInput = {
+        action,
+        id: this.studyCard.id,
+        level: this.studyCard.level,
+        deckId: this.studyCard.deckId
+      }
+      await updateStudyCard(cardInput)
+      const newCard = await getStudyCard(this.$route.params.deckId)
+      this.studyCard = newCard.data.studyCard
+    }
   },
   async created() {
     const [card,deck] = await Promise.all([

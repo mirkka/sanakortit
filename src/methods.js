@@ -123,12 +123,28 @@ export const flipAllCards = input => {
   })
 }
 
+export const updateStudyCard = input => {
+  return apollo.mutate({
+    mutation: gql`
+      mutation($input: UpdateStudyCardInput) {
+        updateStudyCard(input: $input) {
+          id
+        }
+      }
+    `,
+    variables: {
+      input
+    }
+  })
+}
+
 export const getStudyCard = id => {
   return apollo.query({
     query: GET_STUDY_CARD,
     variables: {
       id
-    }
+    },
+    fetchPolicy: 'no-cache'
   })
 }
 

@@ -61,6 +61,7 @@ export const GET_STUDY_CARD = gql`
       front
       back
       level
+      weight
       tags
       id
       deckId
