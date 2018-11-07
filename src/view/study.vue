@@ -38,8 +38,7 @@
                     class="btn btn-outline-secondary"
                     @click="handleUpdateStudyCard('good')">
               <i class="fa fa-check text-success"></i>
-              Good
-              (+<span>10 minutes</span>)
+              <span>{{getActionButtonText(studyCard)}}</span>
             </button>
           </div>
         </div>
@@ -98,6 +97,23 @@ export default {
     toggleShowAnswer: function () {
       this.showAnswer = !this.showAnswer;
     },
+    getActionButtonText: studyCard => {
+      const hour = 1000 * 60 * 60
+      const day = hour * 24
+      const levelWeights = [
+          1000 * 60 * 10,
+          1000 * 60 * 10,
+          day,
+          day * 3,
+          day * 4,
+          day * 7
+      ];
+      if (studyCard.level < 2) {
+          return `Good (+${levelWeights[studyCard.level] / 1000 / 60}m)`
+      } else {
+          return `Good (+${levelWeights[studyCard.level] / 1000 / 60 / 60 / 24 }d)`
+      }
+    },
     handleUpdateStudyCard: async function (action) {
       const cardInput = {
         action,
@@ -116,7 +132,7 @@ export default {
   },
   async created() {
     const deck = await getDeck(this.$route.params.deckId)
-    await setActiveDeck(deck.data.getDeck),
+    await setActiveDeck(deck.data.getDeck)
     this.activeDeck = deck.data.getDeck
   },
   async destroyed() {
