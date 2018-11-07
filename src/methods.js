@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 import apollo from './apolloClient'
-import { GET_STUDY_CARD, GET_DECK, EDIT_CARD_SUBSCRIPTION } from './graphql/queries'
+import { GET_STUDY_CARD, GET_DECK } from './graphql/queries'
 
 export const toggleModal = modalName => {
   return apollo.mutate({
@@ -166,6 +166,16 @@ export const editCard = input => {
     variables: {
       input
     }
+  })
+}
+
+export const getStudyCard = id => {
+  return apollo.query({
+    query: GET_STUDY_CARD,
+    variables: {
+      id
+    },
+    fetchPolicy: 'no-cache'
   })
 }
 

@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { getDeck, updateStudyCard, toggleModal, setActiveCard, setActiveDeck } from '../methods'
+import { getDeck, updateStudyCard, getStudyCard, toggleModal, setActiveCard, setActiveDeck } from '../methods'
 import defaults from '../graphql/defaults';
 import{ GET_STUDY_CARD, EDIT_CARD_SUBSCRIPTION } from  '../graphql/queries'
 
@@ -94,12 +94,13 @@ export default {
   methods: {
     toggleModal,
     setActiveCard,
+    getStudyCard,
     toggleShowAnswer: function () {
       this.showAnswer = !this.showAnswer;
     },
     getActionButtonText: studyCard => {
-      const hour = 1000 * 60 * 60
-      const day = hour * 24
+      var hour = 1000 * 60 * 60
+      var day = hour * 24
       const levelWeights = [
           1000 * 60 * 10,
           1000 * 60 * 10,

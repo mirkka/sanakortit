@@ -97,18 +97,16 @@
 </template>
 
 <script>
-import { toggleModal, createCard, setActiveDeck, editCard } from '../../methods.js'
+import { toggleModal, createCard, setActiveDeck, setActiveCard, editCard } from '../../methods.js'
 import { ACTIVE_DECK, LIST_DECKS, ACTIVE_CARD } from '../../graphql/queries.js'
+import defaults  from '../../graphql/defaults'
 
 export default {
   name: 'cardFormModal',
   data () {
     return {
-      ActiveDeck: {},
-      AcitveCard: {},
       newCard: {},
       newDeck: {},
-      listDecks: [],
       isExpanded: false,
       isEdit: false
     }
@@ -126,14 +124,17 @@ export default {
     toggleModal,
     createCard,
     setActiveDeck,
+    setActiveCard,
     handleCreateCard: async function(cardData) {
-      const newCard = {
+      const newCardObj = {
         front: cardData.front,
         back: cardData.back,
         tags: cardData.tags,
         deckId: this.newDeck.id,
       }
-      await createCard(newCard);
+      await createCard(newCardObj);
+
+      this.newCard = { ...defaults.ActiveCard }
     },
     handleEditCard: async function(cardData) {
       const tags = cardData.tags === "" ? null : cardData.tags
@@ -143,7 +144,8 @@ export default {
         tags,
         id: cardData.id
       }
-      await editCard(updatedCard);
+      await editCard(updatedCard)
+      toggleModal('createCard')
     },
     toggleDropdown: function () {
       this.isExpanded = !this.isExpanded;
