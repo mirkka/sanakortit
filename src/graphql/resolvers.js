@@ -1,4 +1,4 @@
-import {IS_MODAL_OPEN, NEW_ACCOUNT_PAGE, ACTIVE_DECK} from "./queries";
+import { IS_MODAL_OPEN, NEW_ACCOUNT_PAGE, ACTIVE_DECK, ACTIVE_CARD } from "./queries";
 import defaults from './defaults';
 
 export default {
@@ -32,9 +32,14 @@ export default {
       const updatedActiveDeck = (data.ActiveDeck.id !== ActiveDeck.id) ? ActiveDeck : defaults.ActiveDeck;
 
       Object.assign(data.ActiveDeck, updatedActiveDeck)
-
       cache.writeData({ data });
       return updatedActiveDeck;
+    },
+    setActiveCard: (_, { ActiveCard }, { cache }) => {
+      const data = cache.readQuery({ query: ACTIVE_CARD });
+      data.ActiveCard = ActiveCard
+      cache.writeData({data});
+      return ActiveCard;
     }
   },
 };

@@ -5,7 +5,8 @@
       <div class="modal-dialog modal-lg" @click="$event.stopPropagation()">
         <div class="modal-content">
           <div class="modal-header">
-            <h4 class="modal-title"><i class="fa fa-file-alt"></i> Edit card</h4>
+            <h4 class="modal-title" v-if="isEdit"><i class="fa fa-file-alt"></i> Edit card</h4>
+            <h4 class="modal-title" v-if="!isEdit"><i class="fa fa-file-alt"></i> Add card</h4>
             <button type="button" class="close" @click="toggleModal('createCard')">
               <span>&times;</span>
               <span class="sr-only">Close</span>
@@ -14,7 +15,8 @@
           <div class="modal-body">
             <div class="dropdown">
               <strong>Deck:</strong>
-              <div>
+              <div v-if="isEdit">{{ActiveDeck.name}}</div>
+              <div v-if="!isEdit">
                 <button class="btn btn-secondary dropdown-toggle"
                         type="button"
                         @click="toggleDropdown">
@@ -29,9 +31,6 @@
                 </div>
               </div>
             </div>
-            <!-- <div class="dropdown">
-              <span class="deckName">Deck1</span>
-            </div> -->
             <hr />
             <!-- <div class="disclaimer">
               <div>
@@ -81,7 +80,13 @@
                 <button type="button"
                         class="btn btn-secondary"
                         tabindex="4"
+                        v-if="!isEdit"
                         @click="handleCreateCard(newCard)">Save</button>
+                <button type="button"
+                        v-if="isEdit"
+                        class="btn btn-secondary"
+                        tabindex="4"
+                        @click="handleEditCard(newCard)">Edit</button>
               </div>
             </div>
           </div>
@@ -92,23 +97,29 @@
 </template>
 
 <script>
-import { toggleModal, createCard, setActiveDeck } from '../../methods.js'
-import { ACTIVE_DECK, LIST_DECKS } from '../../graphql/queries.js'
+import { toggleModal, createCard, setActiveDeck, editCard } from '../../methods.js'
+import { ACTIVE_DECK, LIST_DECKS, ACTIVE_CARD } from '../../graphql/queries.js'
 
 export default {
   name: 'cardFormModal',
   data () {
     return {
       ActiveDeck: {},
+      AcitveCard: {},
       newCard: {},
       newDeck: {},
       listDecks: [],
-      isExpanded: false
+      isExpanded: false,
+      isEdit: false
     }
   },
   mounted() {
     if (this.ActiveDeck) {
       this.newDeck = this.ActiveDeck
+    }
+    if (this.ActiveCard.id !== "") {
+      this.newCard = this.ActiveCard
+      this.isEdit = true
     }
   },
   methods: {
@@ -119,10 +130,20 @@ export default {
       const newCard = {
         front: cardData.front,
         back: cardData.back,
-        tags: cardData.tags ? cardData.tags.split(',') : [],
+        tags: cardData.tags,
         deckId: this.newDeck.id,
       }
       await createCard(newCard);
+    },
+    handleEditCard: async function(cardData) {
+      const tags = cardData.tags === "" ? null : cardData.tags
+      const updatedCard = {
+        front: cardData.front,
+        back: cardData.back,
+        tags,
+        id: cardData.id
+      }
+      await editCard(updatedCard);
     },
     toggleDropdown: function () {
       this.isExpanded = !this.isExpanded;
@@ -143,6 +164,9 @@ export default {
   apollo: {
     ActiveDeck: {
       query: ACTIVE_DECK,
+    },
+    ActiveCard: {
+      query: ACTIVE_CARD,
     },
     listDecks: {
       query: LIST_DECKS,

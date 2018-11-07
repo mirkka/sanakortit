@@ -2,7 +2,6 @@ export default {
   Modals: {
     exportDeck: false,
     createDeck: false,
-    addCard: false,
     editDeck: false,
     deleteDeck: false,
     createCard:  false,
@@ -20,6 +19,15 @@ export default {
     due: null,
     cardAmount: null,
     __typename: 'ActiveDeck'
+  },
+  ActiveCard: {
+    id: '',
+    front: '',
+    back: '',
+    tags: '',
+    level: 0,
+    deckId: '',
+    __typename: 'ActiveCard'
   },
   NewDeckName: {
     name: '',

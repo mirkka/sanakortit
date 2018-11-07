@@ -16,7 +16,10 @@
       </div>
 
       <div class="d-flex justify-content-center position-relative pt-3 pb-4">
-        <button type="button" class="btn btn-outline-secondary position-absolute" style="left: 0">
+        <button type="button"
+                class="btn btn-outline-secondary position-absolute"
+                style="left: 0"
+                @click="handleEditCard(studyCard)">
           <i class="fa fa-pencil-alt"></i>
         </button>
         <div>
@@ -46,7 +49,9 @@
 </template>
 
 <script>
-import { getStudyCard, getDeck, updateStudyCard } from '../methods'
+import { getDeck, updateStudyCard, toggleModal, setActiveCard, setActiveDeck } from '../methods'
+import defaults from '../graphql/defaults';
+import{ GET_STUDY_CARD, EDIT_CARD_SUBSCRIPTION } from  '../graphql/queries'
 
 export default {
   name: 'study',
@@ -54,10 +59,42 @@ export default {
     return {
       activeDeck: {},
       showAnswer: false,
-      studyCard: {}
+      studyCard: {},
+    }
+  },
+  apollo: {
+    studyCard: {
+      query: GET_STUDY_CARD,
+      variables () {
+        return {
+          id: this.$route.params.deckId,
+        }
+      },
+      subscribeToMore: [{
+        document: EDIT_CARD_SUBSCRIPTION,
+        variables () {
+          return {
+            id: this.$route.params.deckId,
+          }
+        },
+        updateQuery: ({ studyCard }, { subscriptionData }) => {
+          const { __typename, deckId,  level } = studyCard
+          return {
+            studyCard: {
+              __typename,
+              deckId,
+              level,
+              ...subscriptionData.data.onUpdateCard
+            }
+          }
+        }
+      }],
+      fetchPolicy: 'no-cache'
     }
   },
   methods: {
+    toggleModal,
+    setActiveCard,
     toggleShowAnswer: function () {
       this.showAnswer = !this.showAnswer;
     },
@@ -71,15 +108,19 @@ export default {
       await updateStudyCard(cardInput)
       const newCard = await getStudyCard(this.$route.params.deckId)
       this.studyCard = newCard.data.studyCard
+    },
+    handleEditCard: async studyCard => {
+      await setActiveCard(studyCard)
+      toggleModal('createCard')
     }
   },
   async created() {
-    const [card,deck] = await Promise.all([
-      getStudyCard(this.$route.params.deckId),
-      getDeck(this.$route.params.deckId)
-    ])
-    this.studyCard = card.data.studyCard
+    const deck = await getDeck(this.$route.params.deckId)
+    await setActiveDeck(deck.data.getDeck),
     this.activeDeck = deck.data.getDeck
   },
+  async destroyed() {
+    await setActiveCard(defaults.ActiveCard)
+  }
 }
 </script>

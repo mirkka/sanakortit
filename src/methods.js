@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 import apollo from './apolloClient'
-import { GET_STUDY_CARD, GET_DECK } from './graphql/queries'
+import { GET_STUDY_CARD, GET_DECK, EDIT_CARD_SUBSCRIPTION } from './graphql/queries'
 
 export const toggleModal = modalName => {
   return apollo.mutate({
@@ -34,6 +34,19 @@ export const setActiveDeck = ActiveDeck => {
     `,
     variables: {
       ActiveDeck
+    }
+  })
+}
+
+export const setActiveCard = ActiveCard => {
+  return apollo.mutate({
+    mutation: gql`
+      mutation($ActiveCard: ActiveCard) {
+        setActiveCard(ActiveCard: $ActiveCard) @client
+      }
+    `,
+    variables: {
+      ActiveCard
     }
   })
 }
@@ -138,13 +151,21 @@ export const updateStudyCard = input => {
   })
 }
 
-export const getStudyCard = id => {
-  return apollo.query({
-    query: GET_STUDY_CARD,
+export const editCard = input => {
+  return apollo.mutate({
+    mutation: gql`
+      mutation($input: UpdateCardInput) {
+        updateCard(input: $input) {
+          front
+          back
+          tags
+          id
+        }
+      }
+    `,
     variables: {
-      id
-    },
-    fetchPolicy: 'no-cache'
+      input
+    }
   })
 }
 

@@ -5,7 +5,6 @@ export const IS_MODAL_OPEN = gql`
     Modals @client {
       exportDeck,
       createDeck,
-      addCard,
       editDeck,
       deleteDeck,
       createCard,
@@ -29,6 +28,17 @@ export const ACTIVE_DECK = gql`
       name
       due
       cardAmount
+    }
+  }
+`
+
+export const ACTIVE_CARD = gql`
+  query {
+    ActiveCard @client {
+      id
+      front
+      back
+      tags
     }
   }
 `
@@ -61,7 +71,6 @@ export const GET_STUDY_CARD = gql`
       front
       back
       level
-      weight
       tags
       id
       deckId
@@ -90,6 +99,17 @@ export const CREATE_CARD_SUBSCRIPTION = gql`
   subscription {
     onCreateCard {
       deckId,
+    }
+  }
+`
+
+export const EDIT_CARD_SUBSCRIPTION = gql`
+  subscription {
+    onUpdateCard {
+      back,
+      front,
+      tags,
+      id,
     }
   }
 `
