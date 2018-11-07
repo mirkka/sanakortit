@@ -6,7 +6,7 @@
         <div class="modal-content">
           <div class="modal-body text-center">
             <h5 class="modal-title pb-3">You have finished all the cards</h5>
-            <router-link to="/" tag="button" class="btn btn-secondary">Return to Decks</router-link>
+            <router-link to="/" tag="button" class="btn btn-secondary" @click.native="toggleModal('finishStudy')">Return to Decks</router-link>
           </div>
         </div>
       </div>
@@ -15,7 +15,11 @@
 </template>
 
 <script>
+  import { toggleModal } from '../methods'
   export default {
-    name: 'finishStudyModal'
+    name: 'finishStudyModal',
+    methods: {
+      toggleModal
+    }
   }
 </script>

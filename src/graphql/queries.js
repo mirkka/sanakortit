@@ -10,6 +10,7 @@ export const IS_MODAL_OPEN = gql`
       createCard,
       copyCard,
       deleteCard,
+      finishStudy
     }
   }
 `

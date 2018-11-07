@@ -11,7 +11,7 @@
     <delete-deck-modal v-if="Modals.deleteDeck" />
     <copy-move-modal v-if="Modals.copyCard"  />
     <delete-card-modal v-if="Modals.deleteCard" />
-    <finish-study-modal v-if="false" />
+    <finish-study-modal v-if="Modals.finishStudy" />
   </div>
 </template>
 
@@ -64,7 +64,7 @@ export default {
 <style>
   body {
     background-color: rgb(218, 218, 218);
-  } 
+  }
 
   .container {
     background-color: white;
@@ -128,5 +128,5 @@ export default {
   .study-card {
     min-height: 450px;
   }
-  
+
 </style>

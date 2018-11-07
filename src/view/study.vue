@@ -124,6 +124,10 @@ export default {
       }
       await updateStudyCard(cardInput)
       const newCard = await getStudyCard(this.$route.params.deckId)
+      if(!newCard.data.studyCard) {
+        toggleModal('finishStudy')
+        return;
+      }
       this.studyCard = newCard.data.studyCard
     },
     handleEditCard: async studyCard => {

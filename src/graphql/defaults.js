@@ -7,6 +7,7 @@ export default {
     createCard:  false,
     copyCard: false,
     deleteCard: false,
+    finishStudy: false,
     __typename: 'Modals',
   },
   NewAccountPage: {
