@@ -184,6 +184,7 @@ export const getDeck = id => {
     query: GET_DECK,
     variables: {
       id
-    }
+    },
+    fetchPolicy: 'no-cache'
   })
 }

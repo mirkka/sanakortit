@@ -89,7 +89,7 @@ export default {
         }
       }],
       fetchPolicy: 'no-cache'
-    }
+    },
   },
   methods: {
     toggleModal,
@@ -116,6 +116,7 @@ export default {
       }
     },
     handleUpdateStudyCard: async function (action) {
+      const deckId = this.$route.params.deckId
       const cardInput = {
         action,
         id: this.studyCard.id,
@@ -123,12 +124,14 @@ export default {
         deckId: this.studyCard.deckId
       }
       await updateStudyCard(cardInput)
-      const newCard = await getStudyCard(this.$route.params.deckId)
+      const newCard = await getStudyCard(deckId)
       if(!newCard.data.studyCard) {
         toggleModal('finishStudy')
         return;
       }
-      this.studyCard = newCard.data.studyCard
+      const deck  = await getDeck(deckId)
+      this.studyCard = { ...newCard.data.studyCard }
+      this.activeDeck = { ...deck.data.getDeck }
     },
     handleEditCard: async studyCard => {
       await setActiveCard(studyCard)
