@@ -56,7 +56,7 @@ export default {
   async mounted() {
     await this.$apollo.provider.defaultClient.hydrated();
     this.hydrated = true;
-  },
+  }
 }
 
 </script>

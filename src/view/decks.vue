@@ -84,9 +84,8 @@ export default {
             }
           }
         }
-      ],
-      fetchPolicy: 'no-cache'
-    },
+      ]
+    }
   }
 }
 </script>
