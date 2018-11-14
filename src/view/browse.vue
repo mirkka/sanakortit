@@ -5,11 +5,12 @@
         <div class="border-bottom">
           <strong class="pl-3">Deck</strong>
           <ul class="list">
-            <li class="bg-warning px-3 pointer">
-              <a href="">test</a>
-            </li>
-            <li class="pointer px-3">
-              <a href="">test2</a>
+            <li class="px-3 pointer"
+                v-for="deck in listDecks.items"
+                :key="deck.id"
+                :class="{ 'bg-warning': isSelected(deck) }"
+                @click="selectDeck(deck)">
+              {{deck.name}}
             </li>
           </ul>
         </div>
@@ -76,7 +77,8 @@
 
 <script>
 import SearchResult from '../components/searchResult.vue'
-import { LIST_DECKS, LIST_CARDS }  from '../graphql/queries'
+import { LIST_DECKS }  from '../graphql/queries'
+import searchFilters from '../searchFilters'
 
 import { toggleModal, getCards } from '../methods.js'
 
@@ -85,20 +87,29 @@ export default {
   methods: {
     toggleModal,
     handleSearch: async function (phrase) {
-      if (phrase === "") {
+      if(phrase === "") {
         this.searchResults = []
         return;
       }
-      const filter = {
-        front: {
-          contains: phrase
-        },
-        back: {
-          contains: phrase
-        }
+      const response = await getCards(searchFilters.allCardsByPhrase(phrase))
+
+      this.searchResults = response.data.listCards.items
+    },
+    getCardsForDeck: async function (deckId) {
+      const response = await getCards(searchFilters.cardsByDeck(deckId))
+      this.searchResults = response.data.listCards.items
+    },
+    selectDeck: function (deck) {
+      if(this.selectedDeck.id === deck.id) {
+        this.selectedDeck = {}
+        this.searchResults = []
+      } else {
+        this.selectedDeck = deck;
+        this.getCardsForDeck(deck.id)
       }
-      const resp = await getCards(filter)
-      this.searchResults = resp.data.listCards.items
+    },
+    isSelected(deck) {
+      return deck.id === this.selectedDeck.id;
     }
   },
   components: {
@@ -109,7 +120,8 @@ export default {
       phrase: "",
       listDecks: [],
       listCards: [],
-      searchResults: []
+      searchResults: [],
+      selectedDeck: {},
     }
   },
   apollo: {
