@@ -41,7 +41,11 @@
 
         <div class="">
           <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Search" aria-label="Search" aria-describedby="search">
+            <input type="text"
+                   class="form-control"
+                   placeholder="Search"
+                   v-model="phrase"
+                   @input="handleSearch(phrase)">
             <div class="input-group-append">
               <button class="btn btn-outline-secondary" type="button" id="button-addon2">
                 <i class="fa fa-search"></i>
@@ -55,16 +59,15 @@
             <thead>
               <tr>
                 <th id="sort" class="pointer">
-                  <i class="fa fa-sort"></i> Found cards (<span id="amount">0</span>)
+                  <i class="fa fa-sort"></i> Found cards (<span>{{searchResults.length}}</span>)
                 </th>
                 <th class="text-right">All
                   <input type="checkbox" id="selectAll" class="ml-2 pointer">
                 </th>
               </tr>
             </thead>
-            <tbody id="results">
-              <search-result />
-              <search-result />
+            <tbody>
+              <search-result v-for="card in searchResults" :key="card.id" :card="card"/>
             </tbody>
           </table>
         </div>
@@ -75,14 +78,46 @@
 
 <script>
 import SearchResult from '../components/searchResult.vue'
+import { LIST_DECKS, LIST_CARDS }  from '../graphql/queries'
 
-import { toggleModal } from '../methods.js'
+import { toggleModal, getCards } from '../methods.js'
 
 export default {
   name: 'browse',
-  methods: { toggleModal },
+  methods: {
+    toggleModal,
+    handleSearch: async function (phrase) {
+      if (phrase === "") {
+        this.searchResults = []
+        return;
+      }
+      const filter = {
+        front: {
+          contains: phrase
+        },
+        back: {
+          contains: phrase
+        }
+      }
+      const resp = await getCards(filter)
+      this.searchResults = resp.data.listCards.items
+    }
+  },
   components: {
     'search-result': SearchResult,
+  },
+  data () {
+    return {
+      phrase: "",
+      listDecks: [],
+      listCards: [],
+      searchResults: []
+    }
+  },
+  apollo: {
+    listDecks: {
+      query: LIST_DECKS
+    }
   }
 }
 </script>

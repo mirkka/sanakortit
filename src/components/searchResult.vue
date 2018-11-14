@@ -1,9 +1,9 @@
 <template>
   <tr>
     <td>
-      <a class="pointer word-wrap">front</a>
+      <a class="pointer word-wrap">{{card.front}}</a>
       <br>
-      <small>back</small>
+      <small>{{card.back}}</small>
       </td>
       <td class="text-right">
         <input type="checkbox" class="pointer">
@@ -15,5 +15,8 @@
 
 export default {
   name: 'searchResult',
+  props: {
+    card: Object,
+  },
 }
 </script>

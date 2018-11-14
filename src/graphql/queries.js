@@ -78,6 +78,23 @@ export const GET_STUDY_CARD = gql`
     }
   }
 `
+export const GET_CARDS = gql`
+  query listCards($filter: TableCardFilterInput) {
+    listCards(
+      filter: $filter
+    ) {
+        items {
+          front
+          back
+          level
+          tags
+          id
+          deckId
+        }
+    }
+  }
+`
+
 export const NEW_DECK_SUBSCRIPTION = gql`
   subscription {
     onCreateDeck {
