@@ -46,10 +46,8 @@
                    placeholder="Search"
                    v-model="phrase"
                    @input="handleSearch(phrase)">
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+            <div class="d-flex align-items-center px-2 text-secondary">
                 <i class="fa fa-search"></i>
-              </button>
             </div>
           </div>
         </div>
