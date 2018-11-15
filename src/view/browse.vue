@@ -17,11 +17,8 @@
         <div class="py-2">
           <strong class="pl-3">Tags</strong>
           <ul class="list">
-            <li class="px-3 pointer">
-              <a href="">test</a>
-            </li>
-            <li class="px-3 bg-warning pointer">
-              <a href="">test2</a>
+            <li class="px-3 pointer" v-for="tag in listTags.tags" :key="tag">
+              {{tag}}
             </li>
           </ul>
         </div>
@@ -77,7 +74,7 @@
 
 <script>
 import SearchResult from '../components/searchResult.vue'
-import { LIST_DECKS }  from '../graphql/queries'
+import { LIST_DECKS, LIST_TAGS }  from '../graphql/queries'
 import searchFilters from '../searchFilters'
 
 import { toggleModal, searchCards, getCards } from '../methods.js'
@@ -122,11 +119,15 @@ export default {
       listCards: [],
       searchResults: [],
       selectedDeck: {},
+      listTags: []
     }
   },
   apollo: {
     listDecks: {
       query: LIST_DECKS
+    },
+    listTags: {
+      query: LIST_TAGS
     }
   }
 }

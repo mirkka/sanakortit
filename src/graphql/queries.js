@@ -66,6 +66,13 @@ export const LIST_DECKS = gql`
     }
   }
 `
+export const LIST_TAGS = gql`
+  query {
+    listTags {
+      tags
+    }
+  }
+`
 export const GET_STUDY_CARD = gql`
   query studyCard($id: ID){
     studyCard(deckId: $id) {
