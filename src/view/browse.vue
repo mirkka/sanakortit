@@ -8,7 +8,7 @@
             <li class="px-3 pointer"
                 v-for="deck in listDecks.items"
                 :key="deck.id"
-                :class="{ 'bg-warning': isSelected(deck) }"
+                :class="{ 'bg-warning': isDeckSelected(deck) }"
                 @click="selectDeck(deck)">
               {{deck.name}}
             </li>
@@ -17,7 +17,11 @@
         <div class="py-2">
           <strong class="pl-3">Tags</strong>
           <ul class="list">
-            <li class="px-3 pointer" v-for="tag in listTags.tags" :key="tag">
+            <li class="px-3 pointer"
+                v-for="tag in listTags.tags"
+                :key="tag"
+                :class="{ 'bg-warning': isTagSelected(tag) }"
+                @click="selectTag(tag)">
               {{tag}}
             </li>
           </ul>
@@ -96,7 +100,12 @@ export default {
       const response = await getCards(searchFilters.cardsByDeck(deckId))
       this.searchResults = response.data.listCards.items
     },
+    getCardsForTag: async function (tag) {
+      const response = await getCards(searchFilters.cardsByTag(tag))
+      this.searchResults = response.data.listCards.items
+    },
     selectDeck: function (deck) {
+      this.selectedTag = undefined
       if(this.selectedDeck.id === deck.id) {
         this.selectedDeck = {}
         this.searchResults = []
@@ -105,8 +114,21 @@ export default {
         this.getCardsForDeck(deck.id)
       }
     },
-    isSelected(deck) {
+    isDeckSelected(deck) {
       return deck.id === this.selectedDeck.id;
+    },
+    selectTag: function (tag) {
+      this.selectedDeck = {}
+      if(this.selectedTag === tag) {
+        this.selectedTag = undefined
+        this.searchResults = []
+      } else {
+        this.selectedTag = tag;
+        this.getCardsForTag(tag)
+      }
+    },
+    isTagSelected(tag) {
+      return tag === this.selectedTag;
     }
   },
   components: {
@@ -119,6 +141,7 @@ export default {
       listCards: [],
       searchResults: [],
       selectedDeck: {},
+      selectedTag: undefined,
       listTags: []
     }
   },

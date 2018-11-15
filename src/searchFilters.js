@@ -7,5 +7,8 @@ export default {
   },
   cardsByBack: (phrase) => {
     return {back: {contains: phrase}}
+  },
+  cardsByTag: (phrase) => {
+    return {tags: {contains: phrase}}
   }
 }
