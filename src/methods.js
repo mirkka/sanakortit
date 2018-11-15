@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 import apollo from './apolloClient'
-import { GET_STUDY_CARD, GET_DECK, GET_CARDS } from './graphql/queries'
+import { GET_STUDY_CARD, GET_DECK, SEARCH_CARDS, GET_CARDS } from './graphql/queries'
 
 export const toggleModal = modalName => {
   return apollo.mutate({
@@ -189,11 +189,22 @@ export const getDeck = id => {
   })
 }
 
+export const searchCards = searchParams => {
+  return apollo.query({
+    query: SEARCH_CARDS,
+    variables: {
+      searchParams
+    },
+    fetchPolicy: 'no-cache'
+  })
+}
+
 export const getCards = filter => {
   return apollo.query({
     query: GET_CARDS,
     variables: {
       filter
-    }
+    },
+    fetchPolicy: 'no-cache'
   })
 }

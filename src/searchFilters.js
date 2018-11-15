@@ -1,19 +1,11 @@
 export default {
-  allCardsByPhrase: phrase => {
-    return {
-      front: {
-        contains: phrase
-      },
-      back: {
-        contains: phrase
-      }
-    }
+  cardsByFront: phrase => {
+    return {front: {contains: phrase}}
   },
-  cardsByDeck: deckId => {
-    return {
-      deckId: {
-        contains: deckId
-      }
-    }
+  cardsByDeck: id => {
+    return {deckId: {contains: id}}
+  },
+  cardsByBack: (phrase) => {
+    return {back: {contains: phrase}}
   }
 }

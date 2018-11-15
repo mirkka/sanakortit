@@ -46,7 +46,7 @@
                    class="form-control"
                    placeholder="Search"
                    v-model="phrase"
-                   @input="handleSearch(phrase)">
+                   @input="handleSearch(phrase, selectedDeck.id)">
             <div class="d-flex align-items-center px-2 text-secondary">
                 <i class="fa fa-search"></i>
             </div>
@@ -80,20 +80,20 @@ import SearchResult from '../components/searchResult.vue'
 import { LIST_DECKS }  from '../graphql/queries'
 import searchFilters from '../searchFilters'
 
-import { toggleModal, getCards } from '../methods.js'
+import { toggleModal, searchCards, getCards } from '../methods.js'
 
 export default {
   name: 'browse',
   methods: {
     toggleModal,
-    handleSearch: async function (phrase) {
+    handleSearch: async function (phrase, deckId) {
       if(phrase === "") {
         this.searchResults = []
         return;
       }
-      const response = await getCards(searchFilters.allCardsByPhrase(phrase))
-
-      this.searchResults = response.data.listCards.items
+      const searchParams = { deckId, phrase }
+      const response = await searchCards(searchParams)
+      this.searchResults = response.data.searchCards.items
     },
     getCardsForDeck: async function (deckId) {
       const response = await getCards(searchFilters.cardsByDeck(deckId))

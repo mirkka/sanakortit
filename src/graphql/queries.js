@@ -78,6 +78,22 @@ export const GET_STUDY_CARD = gql`
     }
   }
 `
+export const SEARCH_CARDS = gql`
+  query searchCards($searchParams: SearchParamsInput) {
+    searchCards(
+      searchParams: $searchParams
+    ) {
+        items {
+          front
+          back
+          level
+          tags
+          id
+          deckId
+        }
+    }
+  }
+`
 export const GET_CARDS = gql`
   query listCards($filter: TableCardFilterInput) {
     listCards(
