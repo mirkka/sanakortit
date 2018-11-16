@@ -47,7 +47,7 @@
                    class="form-control"
                    placeholder="Search"
                    v-model="phrase"
-                   @input="handleSearch(phrase, selectedDeck.id)">
+                   @input="handleSearch(phrase, selectedDeck.id, selectedTag)">
             <div class="d-flex align-items-center px-2 text-secondary">
                 <i class="fa fa-search"></i>
             </div>
@@ -87,12 +87,12 @@ export default {
   name: 'browse',
   methods: {
     toggleModal,
-    handleSearch: async function (phrase, deckId) {
+    handleSearch: async function (phrase, deckId, tag) {
       if(phrase === "") {
         this.searchResults = []
         return;
       }
-      const searchParams = { deckId, phrase }
+      const searchParams = { deckId, phrase, tag }
       const response = await searchCards(searchParams)
       this.searchResults = response.data.searchCards.items
     },
@@ -106,6 +106,8 @@ export default {
     },
     selectDeck: function (deck) {
       this.selectedTag = undefined
+      this.searchResults = []
+      this.phrase = ""
       if(this.selectedDeck.id === deck.id) {
         this.selectedDeck = {}
         this.searchResults = []
@@ -119,6 +121,8 @@ export default {
     },
     selectTag: function (tag) {
       this.selectedDeck = {}
+      this.searchResults = []
+      this.phrase = ""
       if(this.selectedTag === tag) {
         this.selectedTag = undefined
         this.searchResults = []
