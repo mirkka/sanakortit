@@ -62,7 +62,10 @@
                   <i class="fa fa-sort"></i> Found cards (<span>{{searchResults.length}}</span>)
                 </th>
                 <th class="text-right">All
-                  <input type="checkbox" id="selectAll" class="ml-2 pointer">
+                  <input type="checkbox"
+                         class="ml-2 pointer"
+                         @click="toggleAllActiveCards"
+                         :disabled="searchResults.length === 0">
                 </th>
               </tr>
             </thead>
@@ -81,12 +84,13 @@ import SearchResult from '../components/searchResult.vue'
 import { LIST_DECKS, LIST_TAGS }  from '../graphql/queries'
 import searchFilters from '../searchFilters'
 
-import { toggleModal, searchCards, getCards } from '../methods.js'
+import { toggleModal, searchCards, getCards, toggleActiveCard } from '../methods.js'
 
 export default {
   name: 'browse',
   methods: {
     toggleModal,
+    toggleActiveCard,
     handleSearch: async function (phrase, deckId, tag) {
       if(phrase === "") {
         this.searchResults = []
@@ -133,6 +137,9 @@ export default {
     },
     isTagSelected(tag) {
       return tag === this.selectedTag;
+    },
+    toggleAllActiveCards() {
+      this.searchResults.forEach(result => toggleActiveCard(result))
     }
   },
   components: {
