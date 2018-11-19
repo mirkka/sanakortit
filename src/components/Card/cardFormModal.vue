@@ -142,6 +142,7 @@ export default {
         front: cardData.front,
         back: cardData.back,
         tags,
+        deckId: cardData.deckId,
         id: cardData.id
       }
       await editCard(updatedCard)

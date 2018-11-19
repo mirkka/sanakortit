@@ -8,7 +8,9 @@
             <h4 class="modal-title">
               <i class="fa fa-file-alt"></i> Copy / Move card(s)
             </h4>
-            <button type="button" class="close" @click="toggleModal('copyCard')">
+            <button type="button"
+                    class="close"
+                    @click="toggleModal('copyCard')">
               <span>&times;</span>
               <span class="sr-only">Close</span>
             </button>
@@ -47,9 +49,13 @@
             <button type="button" class="btn btn-outline-secondary" @click="toggleModal('copyCard')">Discard</button>
             <button type="button"
                     class="btn btn-secondary"
-                    @click="handleCopy(ActiveCards)">Copy</button>
+                    :disabled="actionNotAvailable()"
+                    @click="handleAction('copy', ActiveCards)">Copy</button>
             <strong> or </strong>
-            <button type="button" class="btn btn-secondary">Move</button>
+            <button type="button"
+                    class="btn btn-secondary"
+                    :disabled="actionNotAvailable()"
+                    @click="handleAction('move', ActiveCards)">Move</button>
           </div>
         </div>
       </div>
@@ -58,7 +64,7 @@
 </template>
 
 <script>
-import { toggleModal, createCard, createDeck  } from '../../methods.js'
+import { toggleModal, createCard, editCard, createDeck  } from '../../methods.js'
 import { GET_ACTIVE_CARDS, LIST_DECKS } from '../../graphql/queries.js'
 
 export default {
@@ -77,25 +83,39 @@ export default {
     setNewDeck: function(newDeck) {
       this.newDeck = newDeck;
     },
-    handleCopy: async function(activeCards) {
+    actionNotAvailable: function() {
+      //either new deck name is defined or
+      //destination deck is selected from dropdown
+      return !this.newDeckName === '' || !this.newDeck.id
+    },
+    handleAction: async function(action, activeCards) {
       let newDeckId
+      let newCard
       if(this.newDeckName) {
         const resp = await createDeck({name: this.newDeckName})
         newDeckId = resp.data.createDeck.id
       } else {
         newDeckId = this.newDeck.id
       }
-      const copiedCardsPromises = activeCards.items.map(activeCard => {
-        const newCard = {
+      const updatedCardsPromises = activeCards.items.map(activeCard => {
+        newCard = {
           deckId: newDeckId,
           back: activeCard.back,
           front: activeCard.front,
-          tags: activeCard.tags
+          tags: activeCard.tags,
         }
-        return createCard(newCard)
+
+        if(action === 'copy') {
+          return createCard(newCard)
+        }
+
+        if(action === 'move') {
+          newCard.id = activeCard.id
+          return editCard(newCard)
+        }
       })
 
-      await Promise.all(copiedCardsPromises)
+      await Promise.all(updatedCardsPromises)
       toggleModal('copyCard')
     }
   },
