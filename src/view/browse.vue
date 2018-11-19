@@ -30,15 +30,26 @@
 
       <div class="col-sm-8 border-left">
         <div class="row py-2 px-3 justify-content-end">
-          <button type="button" class="btn btn-outline-secondary btn-xs" title="Create New card" @click="toggleModal('createCard')">
+          <button type="button"
+                  class="btn btn-outline-secondary btn-xs"
+                  title="Create New card"
+                  @click="toggleModal('createCard')">
             <i class="fa fa-file-alt"></i>
           </button>
-          <button type="button" class="btn btn-outline-secondary btn-xs" title="Copy or Move card" @click="toggleModal('copyCard')">
-            <i class="fa fa-copy"></i>
-          </button>
-          <button type="button" class="btn btn-outline-secondary btn-xs" title="Delete card" @click="toggleModal('deleteCard')">
-            <i class="fa fa-trash-alt"></i>
-          </button>
+          <div :class="{'d-none':ActiveCards.items.length === 0}">
+            <button type="button"
+                    class="btn btn-outline-secondary btn-xs mx-2"
+                    title="Copy or Move card"
+                    @click="toggleModal('copyCard')">
+              <i class="fa fa-copy"></i>
+            </button>
+            <button type="button"
+                    class="btn btn-outline-secondary btn-xs"
+                    title="Delete card"
+                    @click="toggleModal('deleteCard')">
+              <i class="fa fa-trash-alt"></i>
+            </button>
+          </div>
         </div>
 
         <div class="">
@@ -82,7 +93,7 @@
 
 <script>
 import SearchResult from '../components/searchResult.vue'
-import { LIST_DECKS, LIST_TAGS }  from '../graphql/queries'
+import { LIST_DECKS, LIST_TAGS, GET_ACTIVE_CARDS }  from '../graphql/queries'
 import searchFilters from '../searchFilters'
 
 import { toggleModal, searchCards, getCards, toggleActiveCard } from '../methods.js'
@@ -157,7 +168,10 @@ export default {
       searchResults: [],
       selectedDeck: {},
       selectedTag: undefined,
-      listTags: []
+      listTags: [],
+      ActiveCards: {
+        items: []
+      }
     }
   },
   apollo: {
@@ -166,6 +180,9 @@ export default {
     },
     listTags: {
       query: LIST_TAGS
+    },
+    ActiveCards: {
+      query: GET_ACTIVE_CARDS
     }
   }
 }
