@@ -30,6 +30,10 @@ export default {
     deckId: '',
     __typename: 'ActiveCard'
   },
+  ActiveCards: {
+    items: [],
+    __typename: 'activeCardsConnection'
+  },
   NewDeckName: {
     name: '',
     __typename: 'NewDeckName'

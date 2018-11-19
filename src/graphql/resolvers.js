@@ -1,4 +1,4 @@
-import { IS_MODAL_OPEN, NEW_ACCOUNT_PAGE, ACTIVE_DECK, ACTIVE_CARD } from "./queries";
+import { IS_MODAL_OPEN, NEW_ACCOUNT_PAGE, ACTIVE_DECK, ACTIVE_CARD, GET_ACTIVE_CARDS } from "./queries";
 import defaults from './defaults';
 
 export default {
@@ -40,6 +40,20 @@ export default {
       data.ActiveCard = ActiveCard
       cache.writeData({data});
       return ActiveCard;
+    },
+    toggleActiveCard: (_, { ActiveCard }, { cache }) => {
+      const data = cache.readQuery({ query: GET_ACTIVE_CARDS })
+      const card = data.ActiveCards.items.find(card => ActiveCard.id === card.id)
+      const index = data.ActiveCards.items.indexOf(card)
+
+      if(index > -1) {
+        data.ActiveCards.items.splice(index, 1);
+      } else {
+        data.ActiveCards.items = [...data.ActiveCards.items, ActiveCard]
+      }
+
+      cache.writeData({data})
+      return data.ActiveCards
     }
   },
 };

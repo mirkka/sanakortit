@@ -73,6 +73,21 @@ export const LIST_TAGS = gql`
     }
   }
 `
+export const GET_ACTIVE_CARDS = gql`
+  query {
+    ActiveCards @client {
+      items {
+        front
+        back
+        level
+        tags
+        id
+        deckId
+      }
+    }
+  }
+`
+
 export const GET_STUDY_CARD = gql`
   query studyCard($id: ID){
     studyCard(deckId: $id) {

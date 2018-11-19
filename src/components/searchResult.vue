@@ -7,13 +7,17 @@
       <small>{{card.back}}</small>
       </td>
       <td class="text-right">
-        <input type="checkbox" class="pointer">
+        <input type="checkbox"
+               class="pointer"
+               :checked="isCardActive(ActiveCards, card.id)"
+               @click="toggleActiveCard(card)">
       </td>
   </tr>
 </template>
 
 <script>
-import { toggleModal, setActiveCard } from '../methods.js'
+import { toggleModal, setActiveCard, toggleActiveCard } from '../methods.js'
+import { GET_ACTIVE_CARDS, LIST_DECKS } from '../graphql/queries.js';
 
 export default {
   name: 'searchResult',
@@ -21,9 +25,21 @@ export default {
     card: Object,
   },
   methods: {
+    toggleActiveCard,
     handleEditCard: async activeCard => {
       await setActiveCard(activeCard)
       toggleModal('createCard')
+    },
+    isCardActive: (activeCards, cardId) => {
+      return !!activeCards.items.find(activeCard => activeCard.id === cardId)
+    }
+  },
+  apollo: {
+    listDecks: {
+      query: LIST_DECKS
+    },
+    ActiveCards: {
+      query: GET_ACTIVE_CARDS
     }
   }
 }

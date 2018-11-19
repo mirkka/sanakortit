@@ -31,11 +31,16 @@ export const typeDefs = `
     tags: [String],
   }
 
+  type ActiveCardsConnection {
+    items: [ActiveCard]
+  }
+
   type Mutation {
     toggleModal (modalName: string): Modals,
     toggleNewAccountPage (empty: String): null,
     setActiveDeck (deck: ActiveDeck): ActiveDeck,
     setActiveCard (card: ActiveCard): ActiveCard
+    toggleActiveCard (card: ActiveCard): ActiveCardsConnection
   }
 
   type Query {
@@ -44,5 +49,6 @@ export const typeDefs = `
     NewDeckName (): NewDeckName,
     ActiveDeck (): Deck,
     ActiveCard (): ActiveCard
+    ActiveCards (): activeCardsConnection
   }
 `;
