@@ -182,6 +182,21 @@ export const editCard = input => {
   })
 }
 
+export const deleteCard = input => {
+  return apollo.mutate({
+    mutation: gql`
+      mutation($input: DeleteCardInput) {
+        deleteCard(input: $input) {
+          id
+        }
+      }
+    `,
+    variables: {
+      input
+    }
+  })
+}
+
 export const getStudyCard = id => {
   return apollo.query({
     query: GET_STUDY_CARD,

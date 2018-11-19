@@ -17,7 +17,7 @@
 
           <div class="modal-footer">
             <button type="button" class="btn btn-default" @click="toggleModal('deleteCard')">Cancel</button>
-            <button type="button" class="btn btn-danger">Delete</button>
+            <button type="button" class="btn btn-danger" @click="handleDeleteCards">Delete</button>
           </div>
         </div>
       </div>
@@ -26,10 +26,23 @@
 </template>
 
 <script>
-import { toggleModal } from '../../methods.js'
+import { toggleModal, deleteCard  } from '../../methods.js'
+import { GET_ACTIVE_CARDS } from '../../graphql/queries.js'
 
 export default {
   name: 'deleteCardModal',
-  methods: { toggleModal }
+  methods: { toggleModal,
+    handleDeleteCards: async function() {
+      await Promise.all(this.ActiveCards.items.map(activeCard => {
+        return deleteCard({id: activeCard.id})
+      }))
+      toggleModal('deleteCard')
+    }
+  },
+  apollo: {
+    ActiveCards: {
+      query: GET_ACTIVE_CARDS
+    }
+  }
 }
 </script>
