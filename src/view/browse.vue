@@ -58,13 +58,14 @@
           <table class="table table-striped table-condensed border-top">
             <thead>
               <tr>
-                <th id="sort" class="pointer">
+                <th class="pointer"
+                    @click="reverse(searchResults)">
                   <i class="fa fa-sort"></i> Found cards (<span>{{searchResults.length}}</span>)
                 </th>
                 <th class="text-right">All
                   <input type="checkbox"
                          class="ml-2 pointer"
-                         @click="toggleAllActiveCards"
+                         @click="toggleAllActiveCards(searchResults)"
                          :disabled="searchResults.length === 0">
                 </th>
               </tr>
@@ -138,8 +139,11 @@ export default {
     isTagSelected(tag) {
       return tag === this.selectedTag;
     },
-    toggleAllActiveCards() {
-      this.searchResults.forEach(result => toggleActiveCard(result))
+    toggleAllActiveCards(searchResults) {
+      searchResults.forEach(result => toggleActiveCard(result))
+    },
+    reverse(searchResults) {
+      this.searchResults = searchResults.reverse()
     }
   },
   components: {
