@@ -17,7 +17,7 @@
 
 <script>
 import { toggleModal, setActiveCard, toggleActiveCard } from '../methods.js'
-import { GET_ACTIVE_CARDS, LIST_DECKS } from '../graphql/queries.js';
+import { GET_ACTIVE_CARDS, LIST_DECKS } from '../graphql/queries.js'
 
 export default {
   name: 'searchResult',

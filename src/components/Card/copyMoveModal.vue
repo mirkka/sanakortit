@@ -17,15 +17,17 @@
             <div class="row">
               <div class="col-sm-4 col-xs-12">
                 <h4 class="modal-title">To existing deck</h4>
-                <div class="dropdown">
-                  <button class="btn btn-secondary dropdown-toggle" type="button">
-                    Dropdown button
-                  </button>
-                  <div class="dropdown-menu">
-                    <div class="dropdown-item">Action</div>
-                    <div class="dropdown-item">Another action</div>
-                    <div class="dropdown-item">Something else here</div>
-                  </div>
+                <button class="btn btn-secondary dropdown-toggle"
+                        type="button"
+                        @click="toggleDropdown">
+                  {{newDeck.name || 'select deck'}}
+                </button>
+                <div class="dropdown-menu" :class="{ 'd-block': isExpanded }">
+                  <button class="dropdown-item pointer"
+                          @click="setNewDeck(deck)"
+                          v-for="deck in listDecks.items"
+                          :key="deck.id"
+                          :disabled="deck.id ===  newDeck.id">{{deck.name}}</button>
                 </div>
               </div>
 
@@ -35,13 +37,17 @@
 
               <div class="form-group col-sm-6 col-xs-12">
                 <h4 class="modal-title">To new deck</h4>
-                <input type="text" class="form-control">
+                <input type="text"
+                       class="form-control"
+                       v-model="newDeckName">
               </div>
             </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary" @click="toggleModal('copyCard')">Discard</button>
-            <button type="button" class="btn btn-secondary">Copy</button>
+            <button type="button"
+                    class="btn btn-secondary"
+                    @click="handleCopy(ActiveCards)">Copy</button>
             <strong> or </strong>
             <button type="button" class="btn btn-secondary">Move</button>
           </div>
@@ -52,10 +58,54 @@
 </template>
 
 <script>
-import { toggleModal } from '../../methods.js'
+import { toggleModal, createCard, createDeck  } from '../../methods.js'
+import { GET_ACTIVE_CARDS, LIST_DECKS } from '../../graphql/queries.js'
 
 export default {
   name: 'copyMoveModal',
-  methods: { toggleModal }
+  data () {
+    return {
+      isExpanded: false,
+      newDeck: {},
+      newDeckName: ''
+    }
+  },
+  methods: { toggleModal,
+    toggleDropdown: function () {
+      this.isExpanded = !this.isExpanded;
+    },
+    setNewDeck: function(newDeck) {
+      this.newDeck = newDeck;
+    },
+    handleCopy: async function(activeCards) {
+      let newDeckId
+      if(this.newDeckName) {
+        const resp = await createDeck({name: this.newDeckName})
+        newDeckId = resp.data.createDeck.id
+      } else {
+        newDeckId = this.newDeck.id
+      }
+      const copiedCardsPromises = activeCards.items.map(activeCard => {
+        const newCard = {
+          deckId: newDeckId,
+          back: activeCard.back,
+          front: activeCard.front,
+          tags: activeCard.tags
+        }
+        return createCard(newCard)
+      })
+
+      await Promise.all(copiedCardsPromises)
+      toggleModal('copyCard')
+    }
+  },
+  apollo: {
+    listDecks: {
+      query: LIST_DECKS
+    },
+    ActiveCards: {
+      query: GET_ACTIVE_CARDS
+    }
+  }
 }
 </script>
