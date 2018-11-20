@@ -54,6 +54,18 @@ export default {
 
       cache.writeData({data})
       return data.ActiveCards
+    },
+    toggleAllActiveCards: (_, { searchResults }, { cache }) => {
+      let data = {}
+      const prevData = cache.readQuery({ query: GET_ACTIVE_CARDS })
+      if(prevData.ActiveCards.items.length > 0) {
+        data.ActiveCards = {items: [], __typename: 'toggleAllActiveCards' }
+      } else {
+        data.ActiveCards = {...searchResults, __typename: 'toggleAllActiveCards' }
+      }
+
+      cache.writeData({data})
+      return data
     }
   },
 };

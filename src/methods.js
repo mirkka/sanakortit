@@ -64,6 +64,19 @@ export const toggleActiveCard = ActiveCard => {
   })
 }
 
+export const toggleAllActiveCards = searchResults => {
+  return apollo.mutate({
+    mutation: gql`
+      mutation($searchResults: ActiveCardsConnection) {
+        toggleAllActiveCards(searchResults: $searchResults) @client
+      }
+    `,
+    variables: {
+      searchResults
+    }
+  })
+}
+
 export const createDeck = input => {
   return apollo.mutate({
     mutation: gql`

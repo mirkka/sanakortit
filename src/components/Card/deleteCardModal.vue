@@ -28,6 +28,7 @@
 <script>
 import { toggleModal, deleteCard  } from '../../methods.js'
 import { GET_ACTIVE_CARDS } from '../../graphql/queries.js'
+import { clearActiveCards } from '../../helpers.js'
 
 export default {
   name: 'deleteCardModal',
@@ -36,6 +37,7 @@ export default {
       await Promise.all(this.ActiveCards.items.map(activeCard => {
         return deleteCard({id: activeCard.id})
       }))
+      clearActiveCards()
       toggleModal('deleteCard')
     }
   },

@@ -76,7 +76,8 @@
                 <th class="text-right">All
                   <input type="checkbox"
                          class="ml-2 pointer"
-                         @click="toggleAllActiveCards(searchResults)"
+                         :checked="ActiveCards.items.length > 0"
+                         @click="toggleAllActiveCards({items: searchResults})"
                          :disabled="searchResults.length === 0">
                 </th>
               </tr>
@@ -95,14 +96,17 @@
 import SearchResult from '../components/searchResult.vue'
 import { LIST_DECKS, LIST_TAGS, GET_ACTIVE_CARDS }  from '../graphql/queries'
 import searchFilters from '../searchFilters'
+import { clearActiveCards } from '../helpers.js'
 
-import { toggleModal, searchCards, getCards, toggleActiveCard } from '../methods.js'
+import { toggleModal, searchCards, getCards, toggleActiveCard, toggleAllActiveCards } from '../methods.js'
 
 export default {
   name: 'browse',
   methods: {
     toggleModal,
     toggleActiveCard,
+    toggleAllActiveCards,
+    clearActiveCards,
     handleSearch: async function (phrase, deckId, tag) {
       if(phrase === "") {
         this.searchResults = []
@@ -113,10 +117,12 @@ export default {
       this.searchResults = response.data.searchCards.items
     },
     getCardsForDeck: async function (deckId) {
+      clearActiveCards()
       const response = await getCards(searchFilters.cardsByDeck(deckId))
       this.searchResults = response.data.listCards.items
     },
     getCardsForTag: async function (tag) {
+      clearActiveCards()
       const response = await getCards(searchFilters.cardsByTag(tag))
       this.searchResults = response.data.listCards.items
     },
@@ -149,9 +155,6 @@ export default {
     },
     isTagSelected(tag) {
       return tag === this.selectedTag;
-    },
-    toggleAllActiveCards(searchResults) {
-      searchResults.forEach(result => toggleActiveCard(result))
     },
     reverse(searchResults) {
       this.searchResults = searchResults.reverse()

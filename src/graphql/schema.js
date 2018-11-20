@@ -41,6 +41,7 @@ export const typeDefs = `
     setActiveDeck (deck: ActiveDeck): ActiveDeck,
     setActiveCard (card: ActiveCard): ActiveCard
     toggleActiveCard (card: ActiveCard): ActiveCardsConnection
+    toggleAllActiveCards (serachResults: ActiveCardsConnection): ActiveCardsConnection
   }
 
   type Query {

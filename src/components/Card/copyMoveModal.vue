@@ -66,6 +66,7 @@
 <script>
 import { toggleModal, createCard, editCard, createDeck  } from '../../methods.js'
 import { GET_ACTIVE_CARDS, LIST_DECKS } from '../../graphql/queries.js'
+import { clearActiveCards } from '../../helpers.js'
 
 export default {
   name: 'copyMoveModal',
@@ -76,7 +77,9 @@ export default {
       newDeckName: ''
     }
   },
-  methods: { toggleModal,
+  methods: {
+    toggleModal,
+    clearActiveCards,
     toggleDropdown: function () {
       this.isExpanded = !this.isExpanded;
     },
@@ -116,6 +119,7 @@ export default {
       })
 
       await Promise.all(updatedCardsPromises)
+      clearActiveCards()
       toggleModal('copyCard')
     }
   },
