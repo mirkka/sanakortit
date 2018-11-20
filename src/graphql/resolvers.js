@@ -58,7 +58,7 @@ export default {
     toggleAllActiveCards: (_, { searchResults }, { cache }) => {
       let data = {}
       const prevData = cache.readQuery({ query: GET_ACTIVE_CARDS })
-      if(prevData.ActiveCards.items.length > 0) {
+      if(prevData.ActiveCards.items.length === searchResults.items.length) {
         data.ActiveCards = {items: [], __typename: 'toggleAllActiveCards' }
       } else {
         data.ActiveCards = {...searchResults, __typename: 'toggleAllActiveCards' }

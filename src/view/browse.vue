@@ -76,7 +76,7 @@
                 <th class="text-right">All
                   <input type="checkbox"
                          class="ml-2 pointer"
-                         :checked="ActiveCards.items.length > 0"
+                         :checked="ActiveCards.items.length === searchResults.length"
                          @click="toggleAllActiveCards({items: searchResults})"
                          :disabled="searchResults.length === 0">
                 </th>
