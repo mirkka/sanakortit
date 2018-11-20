@@ -1,7 +1,7 @@
 <template>
   <div class="modal-open">
     <div class="modal-backdrop fade show"></div>
-    <div class="modal fade show d-block" tabindex="-1" role="dialog">
+    <div class="modal fade show d-block" tabindex="-1" role="dialog" @click="toggleModal('copyCard')">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
