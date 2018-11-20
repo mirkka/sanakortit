@@ -97,8 +97,9 @@ import SearchResult from '../components/searchResult.vue'
 import { LIST_DECKS, LIST_TAGS, GET_ACTIVE_CARDS }  from '../graphql/queries'
 import searchFilters from '../searchFilters'
 import { clearActiveCards } from '../helpers.js'
+import defaults  from '../graphql/defaults'
 
-import { toggleModal, searchCards, getCards, toggleActiveCard, toggleAllActiveCards } from '../methods.js'
+import { toggleModal, searchCards, getCards, toggleActiveCard, toggleAllActiveCards, setActiveDeck } from '../methods.js'
 
 export default {
   name: 'browse',
@@ -107,6 +108,7 @@ export default {
     toggleActiveCard,
     toggleAllActiveCards,
     clearActiveCards,
+    setActiveDeck,
     handleSearch: async function (phrase, deckId, tag) {
       if(phrase === "") {
         this.searchResults = []
@@ -133,9 +135,11 @@ export default {
       if(this.selectedDeck.id === deck.id) {
         this.selectedDeck = {}
         this.searchResults = []
+        setActiveDeck(defaults.ActiveDeck)
       } else {
         this.selectedDeck = deck;
         this.getCardsForDeck(deck.id)
+        setActiveDeck(deck)
       }
     },
     isDeckSelected(deck) {

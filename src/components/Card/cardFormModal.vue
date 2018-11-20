@@ -20,7 +20,7 @@
                 <button class="btn btn-secondary dropdown-toggle"
                         type="button"
                         @click="toggleDropdown">
-                  {{newDeck.name}}
+                  {{newDeck.name || 'select deck'}}
                 </button>
                 <div class="dropdown-menu" :class="{ 'd-block': isExpanded }">
                   <button class="dropdown-item pointer"
@@ -81,11 +81,13 @@
                         class="btn btn-secondary"
                         tabindex="4"
                         v-if="!isEdit"
+                        :disabled="!newDeck.id"
                         @click="handleCreateCard(newCard)">Save</button>
                 <button type="button"
                         v-if="isEdit"
                         class="btn btn-secondary"
                         tabindex="4"
+                        :disabled="!newDeck.id"
                         @click="handleEditCard(newCard)">Edit</button>
               </div>
             </div>
@@ -97,7 +99,7 @@
 </template>
 
 <script>
-import { toggleModal, createCard, setActiveDeck, setActiveCard, editCard } from '../../methods.js'
+import { toggleModal, createCard, editCard } from '../../methods.js'
 import { ACTIVE_DECK, LIST_DECKS, ACTIVE_CARD } from '../../graphql/queries.js'
 import defaults  from '../../graphql/defaults'
 
@@ -123,8 +125,6 @@ export default {
   methods: {
     toggleModal,
     createCard,
-    setActiveDeck,
-    setActiveCard,
     handleCreateCard: async function(cardData) {
       const newCardObj = {
         front: cardData.front,
