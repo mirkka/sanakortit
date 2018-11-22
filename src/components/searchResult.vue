@@ -26,8 +26,8 @@ export default {
   },
   methods: {
     toggleActiveCard,
-    handleEditCard: async activeCard => {
-      await setActiveCard(activeCard)
+    handleEditCard: async editCard => {
+      await setActiveCard(editCard)
       toggleModal('createCard')
     },
     isCardActive: (activeCards, cardId) => {

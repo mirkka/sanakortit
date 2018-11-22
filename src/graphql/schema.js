@@ -29,6 +29,7 @@ export const typeDefs = `
     front: String,
     back: Number,
     tags: [String],
+    deckId: String
   }
 
   type activeSearchFilter {

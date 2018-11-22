@@ -99,9 +99,10 @@
 </template>
 
 <script>
-import { toggleModal, createCard, editCard } from '../../methods.js'
+import { toggleModal, createCard, editCard, getDeck } from '../../methods.js'
 import { ACTIVE_DECK, LIST_DECKS, ACTIVE_CARD } from '../../graphql/queries.js'
 import defaults  from '../../graphql/defaults'
+import _ from 'lodash'
 
 export default {
   name: 'cardFormModal',
@@ -113,10 +114,13 @@ export default {
       isEdit: false
     }
   },
-  mounted() {
-    if (this.ActiveDeck) {
-      this.newDeck = this.ActiveDeck
+  async mounted() {
+    if (!this.ActiveDeck.due) {
+      const response  = await getDeck(this.ActiveCard.deckId)
+      const deck = _.get(response.data, 'getDeck')
+      this.newDeck = this.ActiveDeck = deck
     }
+
     if (this.ActiveCard.id !== "") {
       this.newCard = this.ActiveCard
       this.isEdit = true

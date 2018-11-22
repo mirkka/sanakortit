@@ -40,6 +40,7 @@ export const ACTIVE_CARD = gql`
       front
       back
       tags
+      deckId
     }
   }
 `
