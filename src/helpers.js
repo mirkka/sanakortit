@@ -20,8 +20,8 @@ export const getActiveSearchFilter = async() => {
 export const updateSearchResultsList = async () => {
   let filter
   const activeSearchFilter = await getActiveSearchFilter()
+  delete activeSearchFilter.__typename
   const { phrase, deckId, tag } = activeSearchFilter
-
   if (phrase) {
     return searchCards(activeSearchFilter)
   }

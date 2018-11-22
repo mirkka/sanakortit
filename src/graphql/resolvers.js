@@ -1,5 +1,6 @@
-import { IS_MODAL_OPEN, NEW_ACCOUNT_PAGE, ACTIVE_DECK, ACTIVE_CARD, GET_ACTIVE_CARDS } from "./queries";
-import defaults from './defaults';
+import { IS_MODAL_OPEN, NEW_ACCOUNT_PAGE, ACTIVE_DECK, ACTIVE_CARD, GET_ACTIVE_CARDS } from './queries'
+import defaults from './defaults'
+import lodash from 'lodash'
 
 export default {
   Mutation: {
@@ -68,9 +69,12 @@ export default {
       return data
     },
     setActiveSearchFilter: (_, { filter }, { cache }) => {
+      const removedEmptyValues = lodash.pickBy(filter, _.isString)
       const data = {
-        activeSearchFilter: {...filter, __typename: 'activeSearchFilter'}
+        activeSearchFilter: {...removedEmptyValues, __typename: 'activeSearchFilter'}
       }
+
+
       cache.writeData({data})
       return data
     },
