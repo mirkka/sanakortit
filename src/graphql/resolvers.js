@@ -66,6 +66,21 @@ export default {
 
       cache.writeData({data})
       return data
+    },
+    setActiveSearchFilter: (_, { filter }, { cache }) => {
+      const data = {
+        activeSearchFilter: {...filter, __typename: 'activeSearchFilter'}
+      }
+      cache.writeData({data})
+      return data
+    },
+    setSearchResults: (_, { searchResults }, { cache }) => {
+      const data = {
+        searchResults: { items: searchResults.items, __typename: 'activeCardsConnection'}
+      }
+
+      cache.writeData({data})
+      return data.searchResults
     }
   },
 };

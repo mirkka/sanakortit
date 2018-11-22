@@ -1,6 +1,11 @@
 import gql from 'graphql-tag'
 import apollo from './apolloClient'
-import { GET_STUDY_CARD, GET_DECK, SEARCH_CARDS, GET_CARDS } from './graphql/queries'
+import { GET_STUDY_CARD,
+         GET_DECK,
+         SEARCH_CARDS,
+         GET_CARDS,
+         LIST_TAGS } from './graphql/queries'
+import { updateSearchResultsList } from './helpers'
 
 export const toggleModal = modalName => {
   return apollo.mutate({
@@ -34,6 +39,19 @@ export const setActiveDeck = ActiveDeck => {
     `,
     variables: {
       ActiveDeck
+    }
+  })
+}
+
+export const setActiveSearchFilter = filter => {
+  return apollo.mutate({
+    mutation: gql`
+      mutation($filter: ActiveSearchFilter) {
+        setActiveSearchFilter(filter: $filter) @client
+      }
+    `,
+    variables: {
+      filter
     }
   })
 }
@@ -128,8 +146,8 @@ export const updateDeck = input => {
   })
 }
 
-export const createCard = input => {
-  return apollo.mutate({
+export const createCard = async input => {
+  const response = await apollo.mutate({
     mutation: gql`
       mutation($input: CreateCardInput) {
         createCard(input: $input) {
@@ -145,6 +163,9 @@ export const createCard = input => {
       input
     }
   })
+
+  await updateSearchResultsList()
+  return response
 }
 
 export const flipAllCards = input => {
@@ -177,8 +198,8 @@ export const updateStudyCard = input => {
   })
 }
 
-export const editCard = input => {
-  return apollo.mutate({
+export const editCard = async input => {
+  const response = await apollo.mutate({
     mutation: gql`
       mutation($input: UpdateCardInput) {
         updateCard(input: $input) {
@@ -191,12 +212,16 @@ export const editCard = input => {
     `,
     variables: {
       input
-    }
+    },
+    refetchQueries: [ { query: LIST_TAGS }]
   })
+  await updateSearchResultsList()
+  return response
+
 }
 
-export const deleteCard = input => {
-  return apollo.mutate({
+export const deleteCard = async input => {
+  const response = await apollo.mutate({
     mutation: gql`
       mutation($input: DeleteCardInput) {
         deleteCard(input: $input) {
@@ -206,7 +231,32 @@ export const deleteCard = input => {
     `,
     variables: {
       input
-    }
+    },
+    refetchQueries: [ { query: LIST_TAGS }]
+  })
+  await updateSearchResultsList()
+  return response
+}
+
+export const setSearchResults = searchResults => {
+  return apollo.mutate({
+    mutation: gql`
+      mutation($searchResults: ActiveCardsConnection) {
+        setSearchResults(searchResults: $searchResults) @client {
+          items {
+            front
+            back
+            level
+            tags
+            id
+            deckId
+          }
+        }
+      }
+    `,
+    variables: {
+      searchResults
+    },
   })
 }
 
@@ -230,22 +280,28 @@ export const getDeck = id => {
   })
 }
 
-export const searchCards = searchParams => {
-  return apollo.query({
+export const searchCards = async searchParams => {
+  const response = await apollo.query({
     query: SEARCH_CARDS,
     variables: {
       searchParams
     },
     fetchPolicy: 'no-cache'
   })
+
+  await setSearchResults({items: response.data.searchCards.items})
+  return response
 }
 
-export const getCards = filter => {
-  return apollo.query({
+export const getCards = async filter => {
+  const response = await apollo.query({
     query: GET_CARDS,
     variables: {
       filter
     },
     fetchPolicy: 'no-cache'
   })
+
+  await setSearchResults({items: response.data.listCards.items})
+  return response
 }

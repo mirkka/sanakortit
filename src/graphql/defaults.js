@@ -34,8 +34,18 @@ export default {
     items: [],
     __typename: 'activeCardsConnection'
   },
+  activeSearchFilter: {
+    deckId: '',
+    tag: '',
+    phrase: '',
+    __typename: 'activeSearchFilter'
+  },
   NewDeckName: {
     name: '',
     __typename: 'NewDeckName'
   },
+  searchResults: {
+    items: [],
+    __typename: 'activeCardsConnection'
+  }
 };

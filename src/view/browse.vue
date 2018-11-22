@@ -71,19 +71,19 @@
               <tr>
                 <th class="pointer"
                     @click="reverse(searchResults)">
-                  <i class="fa fa-sort"></i> Found cards (<span>{{searchResults.length}}</span>)
+                  <i class="fa fa-sort"></i> Found cards (<span>{{searchResults.items.length}}</span>)
                 </th>
                 <th class="text-right">All
                   <input type="checkbox"
                          class="ml-2 pointer"
-                         :checked="ActiveCards.items.length === searchResults.length"
-                         @click="toggleAllActiveCards({items: searchResults})"
-                         :disabled="searchResults.length === 0">
+                         :checked="ActiveCards.items.length === searchResults.items.length && searchResults.items.length !== 0"
+                         @click="toggleAllActiveCards({items: searchResults.items})"
+                         :disabled="searchResults.items.length === 0">
                 </th>
               </tr>
             </thead>
             <tbody>
-              <search-result v-for="card in searchResults" :key="card.id" :card="card"/>
+              <search-result v-for="card in searchResults.items" :key="card.id" :card="card"/>
             </tbody>
           </table>
         </div>
@@ -94,12 +94,22 @@
 
 <script>
 import SearchResult from '../components/searchResult.vue'
-import { LIST_DECKS, LIST_TAGS, GET_ACTIVE_CARDS }  from '../graphql/queries'
+import { LIST_DECKS,
+         LIST_TAGS,
+         GET_ACTIVE_CARDS,
+         LIST_SEARCH_RESULTS }  from '../graphql/queries'
 import searchFilters from '../searchFilters'
-import { clearActiveCards } from '../helpers.js'
+import { clearActiveCards, getActiveSearchFilter } from '../helpers.js'
 import defaults  from '../graphql/defaults'
 
-import { toggleModal, searchCards, getCards, toggleActiveCard, toggleAllActiveCards, setActiveDeck } from '../methods.js'
+import { toggleModal,
+         searchCards,
+         getCards,
+         toggleActiveCard,
+         toggleAllActiveCards,
+         setActiveDeck,
+         setActiveSearchFilter,
+         setSearchResults } from '../methods.js'
 
 export default {
   name: 'browse',
@@ -108,33 +118,49 @@ export default {
     toggleActiveCard,
     toggleAllActiveCards,
     clearActiveCards,
+    getActiveSearchFilter,
     setActiveDeck,
+    setActiveSearchFilter,
+    setSearchResults,
     handleSearch: async function (phrase, deckId, tag) {
       if(phrase === "") {
-        this.searchResults = []
+        setSearchResults(defaults.searchResults)
         return;
       }
+      const searchFilter = {
+        deckId: deckId,
+        tag: tag,
+        phrase: phrase
+      }
       const searchParams = { deckId, phrase, tag }
-      const response = await searchCards(searchParams)
-      this.searchResults = response.data.searchCards.items
+      await searchCards(searchParams)
+      setActiveSearchFilter(searchFilter)
     },
     getCardsForDeck: async function (deckId) {
+      const searchFilter = {
+        deckId: deckId,
+        tag: '',
+        phrase: this.phrase
+      }
       clearActiveCards()
-      const response = await getCards(searchFilters.cardsByDeck(deckId))
-      this.searchResults = response.data.listCards.items
+      await getCards(searchFilters.cardsByDeck(deckId))
+      setActiveSearchFilter(searchFilter)
     },
     getCardsForTag: async function (tag) {
+      const searchFilter = {
+        deckId: '',
+        tag: tag,
+        phrase: this.phrase
+      }
       clearActiveCards()
-      const response = await getCards(searchFilters.cardsByTag(tag))
-      this.searchResults = response.data.listCards.items
+      await getCards(searchFilters.cardsByTag(tag))
+      setActiveSearchFilter(searchFilter)
     },
     selectDeck: function (deck) {
       this.selectedTag = undefined
-      this.searchResults = []
       this.phrase = ""
       if(this.selectedDeck.id === deck.id) {
         this.selectedDeck = {}
-        this.searchResults = []
         setActiveDeck(defaults.ActiveDeck)
       } else {
         this.selectedDeck = deck;
@@ -147,11 +173,10 @@ export default {
     },
     selectTag: function (tag) {
       this.selectedDeck = {}
-      this.searchResults = []
+      setSearchResults(defaults.searchResults)
       this.phrase = ""
       if(this.selectedTag === tag) {
         this.selectedTag = undefined
-        this.searchResults = []
       } else {
         this.selectedTag = tag;
         this.getCardsForTag(tag)
@@ -161,7 +186,8 @@ export default {
       return tag === this.selectedTag;
     },
     reverse(searchResults) {
-      this.searchResults = searchResults.reverse()
+      const reversedSearchResults = searchResults.items.reverse()
+      setSearchResults(reversedSearchResults)
     }
   },
   components: {
@@ -172,10 +198,12 @@ export default {
       phrase: "",
       listDecks: [],
       listCards: [],
-      searchResults: [],
       selectedDeck: {},
       selectedTag: undefined,
       listTags: [],
+      searchResults: {
+        items: []
+      },
       ActiveCards: {
         items: []
       }
@@ -186,10 +214,13 @@ export default {
       query: LIST_DECKS
     },
     listTags: {
-      query: LIST_TAGS
+      query: LIST_TAGS,
     },
     ActiveCards: {
       query: GET_ACTIVE_CARDS
+    },
+    searchResults: {
+      query: LIST_SEARCH_RESULTS
     }
   }
 }

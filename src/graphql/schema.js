@@ -31,6 +31,12 @@ export const typeDefs = `
     tags: [String],
   }
 
+  type activeSearchFilter {
+    deckId: String,
+    tag: String,
+    phrase: String
+  }
+
   type ActiveCardsConnection {
     items: [ActiveCard]
   }
@@ -42,6 +48,8 @@ export const typeDefs = `
     setActiveCard (card: ActiveCard): ActiveCard
     toggleActiveCard (card: ActiveCard): ActiveCardsConnection
     toggleAllActiveCards (serachResults: ActiveCardsConnection): ActiveCardsConnection
+    setActiveSearchFilter (filter: activeSearchFilter): activeSearchFilter
+    setSearchResults ([ActiveCard]): ActiveCardsConnection
   }
 
   type Query {
@@ -51,5 +59,7 @@ export const typeDefs = `
     ActiveDeck (): Deck,
     ActiveCard (): ActiveCard
     ActiveCards (): activeCardsConnection
+    getActiveSearchFilter (): activeSearchFilter
+    getSearchResults (): activeCardsConnection
   }
 `;
