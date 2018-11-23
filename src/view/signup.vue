@@ -45,7 +45,7 @@
           <button
             class="btn btn-secondary"
             @click="handleSignup(username, password, confirmPassword)">Create account</button>
-          <router-link to="/login" tag="a">Create new account</router-link>
+          <router-link to="/login" tag="a">Login</router-link>
       </div>
     </div>
   </div>
