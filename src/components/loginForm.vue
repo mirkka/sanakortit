@@ -7,16 +7,18 @@
       </div>
       <div class="form-group">
         <label>Username</label>
-        <input class="form-control" placeholder="Username">
+        <input v-model="username" class="form-control" placeholder="Username">
         <span class="glyphicon glyphicon-remove form-control-feedback"></span>
       </div>
       <div class="form-group">
         <label>Password</label>
-        <input type="password" class="form-control" placeholder="Password">
+        <input v-model="password" type="password" class="form-control" placeholder="Password">
         <span class="glyphicon glyphicon-remove form-control-feedback"></span>
       </div>
       <div class="pb-3 pt-3 d-flex align-items-center justify-content-between">
-        <router-link to="/" tag="button" class="btn btn-secondary">Login</router-link>
+        <button
+          class="btn btn-secondary"
+          @click="handleLogin(username, password)">Login</button>
         <a @click="toggleNewAccountPage">Create new account</a>
       </div>
     </div>
@@ -25,9 +27,25 @@
 
 <script>
 import { toggleNewAccountPage } from '../methods.js'
+import { Auth } from 'aws-amplify'
 
 export default {
   name: 'loginForm',
-  methods: { toggleNewAccountPage }
+  data () {
+    return {
+      username: "",
+      password: "",
+    }
+  },
+  methods: { toggleNewAccountPage,
+    handleLogin: async function (username, password){
+      const user = await Auth.signIn(username, password)
+      //TODO: add try catch
+      // .then(user => console.log(user))
+      // .catch(err => console.log(err));
+      this.$router.push('/')
+      console.log(user)
+    }
+  }
 }
 </script>

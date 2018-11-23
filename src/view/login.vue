@@ -10,6 +10,7 @@
 import LoginForm from '../components/loginForm.vue'
 import SignupForm from '../components/signupForm.vue'
 import { NEW_ACCOUNT_PAGE }  from '../graphql/queries'
+import Amplify, { Auth } from 'aws-amplify'
 
 export default {
   name: 'login',

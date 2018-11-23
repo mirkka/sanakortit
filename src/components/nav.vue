@@ -8,13 +8,17 @@
       <router-link to="/" tag="div" class="p-3 pointer">Decks</router-link>
       <router-link to="/browse" class="pointer p-3" tag="div">Browse</router-link>
     </div>
-    <router-link to="/login" tag="div" class="col-sm-3 d-flex justify-content-end align-items-center pointer" v-if="isNavVisible">
+    <button class="col-sm-3 d-flex justify-content-end align-items-center pointer"
+            v-if="isNavVisible"
+            @click="handleLogout">
       <i class="fa fa-sign-out-alt"></i>
-    </router-link>
+    </button>
   </div>
 </template>
 
 <script>
+import { Auth } from 'aws-amplify'
+
 
 export default {
   name: 'navigation',
@@ -22,6 +26,12 @@ export default {
     isNavVisible() {
       const { path } = this.$route
       return path !== '/login'
+    }
+  },
+  methods: {
+    handleLogout: async function () {
+      await Auth.signOut()
+      this.$router.push('/login')
     }
   }
 }

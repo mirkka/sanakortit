@@ -7,12 +7,19 @@
         </div> -->
         <div class="form-group">
             <label>Username</label>
-            <input class="form-control" placeholder="Username">
+            <input
+              class="form-control"
+              placeholder="Username"
+              v-model="username">
             <span class="glyphicon glyphicon-remove form-control-feedback"></span>
         </div>
         <div class="form-group">
             <label>Password</label>
-            <input type="password" class="form-control" placeholder="Password">
+            <input
+              type="password"
+              class="form-control"
+              placeholder="Password"
+              v-model="password">
             <span class="glyphicon glyphicon-remove form-control-feedback"></span>
         </div>
         <div class="form-group">
@@ -21,7 +28,9 @@
             <span class="glyphicon glyphicon-remove form-control-feedback"></span>
         </div>
         <div class="pb-3 pt-3 d-flex align-items-center justify-content-between">
-            <button class="btn btn-secondary">Create account</button>
+            <button
+              class="btn btn-secondary"
+              @click="handleSignup(username, password)">Create account</button>
             <a @click="toggleNewAccountPage">Login</a>
         </div>
     </div>
@@ -30,9 +39,27 @@
 
 <script>
 import { toggleNewAccountPage } from '../methods.js'
+import { Auth } from 'aws-amplify'
 
 export default {
   name: 'signupForm',
-  methods: { toggleNewAccountPage }
+  data () {
+    return {
+      username: "",
+      password: "",
+    }
+  },
+  methods: { toggleNewAccountPage,
+    handleSignup: async (username, password) => {
+      const newUser = await Auth.signUp({
+      username,
+      password,
+      })
+      //TODO: add try catch
+      // .then(data => console.log(data))
+      // .catch(err => console.log(err));
+      console.log(newUser)
+    }
+  }
 }
 </script>

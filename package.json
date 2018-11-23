@@ -16,6 +16,7 @@
     "apollo-link-http": "^1.5.5",
     "apollo-link-state": "^0.4.2",
     "apollo-link-ws": "^1.0.9",
+    "aws-amplify": "^1.1.10",
     "aws-appsync": "^1.4.0",
     "graphql": "^14.0.2",
     "lodash": "^4.17.11",
