@@ -4,16 +4,25 @@
     <div class="pt-2 border-top">
       <div class="disclaimer text-danger text-center d-none"
            :class="{ 'd-block': loginError }">
-          <strong>Login failed!</strong>
+        <strong>Login failed!</strong>
       </div>
       <div class="form-group">
         <label>Username</label>
-        <input v-model="username" class="form-control" placeholder="Username">
+        <input v-model="username"
+               class="form-control"
+               :class="{'border border-danger': loginError}"
+               @change="removeError"
+               placeholder="Username">
         <span class="glyphicon glyphicon-remove form-control-feedback"></span>
       </div>
       <div class="form-group">
         <label>Password</label>
-        <input v-model="password" type="password" class="form-control" placeholder="Password">
+        <input v-model="password"
+               type="password"
+               class="form-control"
+               :class="{'border border-danger': loginError}"
+               @change="removeError"
+               placeholder="Password">
         <span class="glyphicon glyphicon-remove form-control-feedback"></span>
       </div>
       <div class="pb-3 pt-3 d-flex align-items-center justify-content-between">
@@ -40,13 +49,16 @@ export default {
   },
   methods: {
     handleLogin: async function (username, password) {
-      this.loginError = false
+      this.removeError()
       try {
         await Auth.signIn(username, password)
         this.$router.push('/')
       } catch (error){
         this.loginError = true
       }
+    },
+    removeError: function (){
+      this.loginError = false
     }
   }
 }
