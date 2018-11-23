@@ -8,11 +8,13 @@
       <router-link to="/" tag="div" class="p-3 pointer">Decks</router-link>
       <router-link to="/browse" class="pointer p-3" tag="div">Browse</router-link>
     </div>
-    <button class="col-sm-3 d-flex justify-content-end align-items-center pointer"
-            v-if="isNavVisible"
-            @click="handleLogout">
-      <i class="fa fa-sign-out-alt"></i>
-    </button>
+    <div class="col-sm-3 d-flex justify-content-end align-items-center ">
+      <button class="pointer logout-button"
+              v-if="isNavVisible"
+              @click="handleLogout">
+        <i class="fa fa-sign-out-alt"></i>
+      </button>
+    </div>
   </div>
 </template>
 

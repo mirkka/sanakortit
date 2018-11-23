@@ -78,6 +78,11 @@ export default {
     background-color: rgb(234, 103, 26, 1);
   }
 
+  .logout-button {
+    background-color: rgb(234, 103, 26, 1);
+    border: none;
+  }
+
   .deck:nth-child(2n) {
     background-color: rgb(240, 240, 240);
   }
