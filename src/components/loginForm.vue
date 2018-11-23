@@ -38,13 +38,11 @@ export default {
     }
   },
   methods: { toggleNewAccountPage,
-    handleLogin: async function (username, password){
+    handleLogin: async function (username, password) {
       const user = await Auth.signIn(username, password)
       //TODO: add try catch
-      // .then(user => console.log(user))
-      // .catch(err => console.log(err));
-      this.$router.push('/')
       console.log(user)
+      this.$router.push('/')
     }
   }
 }

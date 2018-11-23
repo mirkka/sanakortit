@@ -17,8 +17,17 @@ const authGuard = async (to, from, next) => {
   }
 }
 
+const loginAuthGuard = async (to, from, next) => {
+  try {
+    await Auth.currentSession()
+    next('/')
+  } catch (error) {
+    next()
+  }
+}
+
 const routes = [
-  { path: '/login', component: Login },
+  { path: '/login', component: Login, beforeEnter: loginAuthGuard },
   { path: '/', component: Decks, beforeEnter: authGuard },
   { path: '/browse', component: Browse, beforeEnter: authGuard },
   { path: '/study/:deckId', component: Study, beforeEnter: authGuard },

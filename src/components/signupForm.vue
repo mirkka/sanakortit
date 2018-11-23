@@ -56,9 +56,6 @@ export default {
       password,
       })
       //TODO: add try catch
-      // .then(data => console.log(data))
-      // .catch(err => console.log(err));
-      console.log(newUser)
     }
   }
 }
