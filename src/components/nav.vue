@@ -3,7 +3,6 @@
     <div class="row text-uppercase col-sm-4 py-3">
       <strong>Sanakortit</strong>
     </div>
-    <!-- TODO: show these only for authenticated user -->
     <div class="col-sm-4 d-flex" v-if="isNavVisible">
       <router-link to="/" tag="div" class="p-3 pointer">Decks</router-link>
       <router-link to="/browse" class="pointer p-3" tag="div">Browse</router-link>
@@ -27,7 +26,7 @@ export default {
   computed: {
     isNavVisible() {
       const { path } = this.$route
-      return path !== '/login'
+      return path !== '/login' && path !== '/signup'
     }
   },
   methods: {
