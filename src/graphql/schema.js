@@ -13,10 +13,6 @@ export const typeDefs = `
     deleteCard: Boolean,
   }
 
-  type NewAccountPage {
-    isVisible: Boolean
-  }
-
   type ActiveDeck {
     id: String,
     name: String,
@@ -44,7 +40,6 @@ export const typeDefs = `
 
   type Mutation {
     toggleModal (modalName: string): Modals,
-    toggleNewAccountPage (empty: String): null,
     setActiveDeck (deck: ActiveDeck): ActiveDeck,
     setActiveCard (card: ActiveCard): ActiveCard
     toggleActiveCard (card: ActiveCard): ActiveCardsConnection
@@ -55,7 +50,6 @@ export const typeDefs = `
 
   type Query {
     Modals (): Modals,
-    NewAccountPage (): NewAccountPage,
     NewDeckName (): NewDeckName,
     ActiveDeck (): Deck,
     ActiveCard (): ActiveCard

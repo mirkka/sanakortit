@@ -14,13 +14,6 @@ export const IS_MODAL_OPEN = gql`
     }
   }
 `
-export const NEW_ACCOUNT_PAGE = gql`
-  query {
-    NewAccountPage @client {
-      isVisible
-    }
-  }
-`
 
 export const ACTIVE_DECK = gql`
   query {

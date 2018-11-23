@@ -1,4 +1,4 @@
-import { IS_MODAL_OPEN, NEW_ACCOUNT_PAGE, ACTIVE_DECK, ACTIVE_CARD, GET_ACTIVE_CARDS } from './queries'
+import { IS_MODAL_OPEN, ACTIVE_DECK, ACTIVE_CARD, GET_ACTIVE_CARDS } from './queries'
 import defaults from './defaults'
 import lodash from 'lodash'
 
@@ -19,14 +19,6 @@ export default {
 
       cache.writeData({ data });
       return modalName;
-    },
-    toggleNewAccountPage: (_, empty, {  cache }) => {
-      const data = cache.readQuery({ query: NEW_ACCOUNT_PAGE });
-
-      data.NewAccountPage.isVisible = !data.NewAccountPage.isVisible;
-
-      cache.writeData({ data });
-      return  null;
     },
     setActiveDeck: (_, { ActiveDeck }, { cache }) => {
       const data = cache.readQuery({ query: ACTIVE_DECK });

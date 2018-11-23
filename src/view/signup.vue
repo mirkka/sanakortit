@@ -32,18 +32,17 @@
             <button
               class="btn btn-secondary"
               @click="handleSignup(username, password)">Create account</button>
-            <a @click="toggleNewAccountPage">Login</a>
+            <router-link to="/login" tag="a">Create new account</router-link>
         </div>
     </div>
   </div>
 </template>
 
 <script>
-import { toggleNewAccountPage } from '../methods.js'
 import { Auth } from 'aws-amplify'
 
 export default {
-  name: 'signupForm',
+  name: 'signup',
   data () {
     return {
       username: "",
@@ -51,7 +50,7 @@ export default {
       signupError: false
     }
   },
-  methods: { toggleNewAccountPage,
+  methods: {
     handleSignup: async function (username, password) {
       this.signupError = false
       try {
@@ -59,6 +58,7 @@ export default {
           username,
           password,
         })
+        this.$router.push('/login')
       } catch (error){
         this.signupError = true
       }

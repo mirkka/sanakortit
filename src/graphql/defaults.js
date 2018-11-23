@@ -10,10 +10,6 @@ export default {
     finishStudy: false,
     __typename: 'Modals',
   },
-  NewAccountPage: {
-    isVisible: false,
-    __typename: 'NewAccountPage'
-  },
   ActiveDeck: {
     id: '',
     name: '',
