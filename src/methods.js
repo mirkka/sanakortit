@@ -22,16 +22,6 @@ export const toggleModal = modalName => {
   })
 }
 
-export const toggleNewAccountPage = () => {
-  return apollo.mutate({
-    mutation: gql`
-      mutation($empty: String) {
-        toggleNewAccountPage (empty: $empty) @client
-      }
-    `
-  })
-}
-
 export const setActiveDeck = ActiveDeck => {
   return apollo.mutate({
     mutation: gql`
