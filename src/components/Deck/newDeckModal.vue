@@ -21,7 +21,7 @@
 
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-secondary" @click="toggleModal('createDeck')">Close</button>
-            <button type="button" class="btn btn-secondary" @click="createDeck({name: newDeckName.name})">Save</button>
+            <button type="button" class="btn btn-secondary" @click="handleCreateDeck(newDeckName.name)">Save</button>
           </div>
         </div>
       </div>
@@ -32,10 +32,22 @@
 
 <script>
 import { toggleModal, createDeck } from '../../methods'
+import { Auth } from 'aws-amplify'
+import _ from 'lodash'
 
 export default {
   name: 'newDeckModal',
-  methods: { toggleModal, createDeck },
+  methods: { toggleModal, createDeck,
+    handleCreateDeck: async (newDeckName) => {
+      const session = await Auth.currentSession()
+      const author = _.get(session, 'accessToken.payload.username')
+      const newDeck = {
+        author,
+        name: newDeckName
+      }
+      createDeck(newDeck)
+    }
+  },
   data () {
     return {
       newDeckName: {}
