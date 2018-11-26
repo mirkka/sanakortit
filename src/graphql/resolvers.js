@@ -10,15 +10,16 @@ export default {
 
       const newVal = !modals.Modals[key]
 
-      modals.Modals = {
+      const newModals = {
         ...modals.Modals,
         [ key ]: newVal
       }
 
-      const data = modals;
-
+      const data = {
+        Modals: newModals
+      };
       cache.writeData({ data });
-      return modalName;
+      return data;
     },
     setActiveDeck: (_, { ActiveDeck }, { cache }) => {
       const data = cache.readQuery({ query: ACTIVE_DECK });

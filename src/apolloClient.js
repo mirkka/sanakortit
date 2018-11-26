@@ -14,6 +14,8 @@ Amplify.configure({
     userPoolId: process.env.VUE_APP_COGNITO_USER_POOL_ID,
     userPoolWebClientId: process.env.VUE_APP_COGNITO_APP_ID,
   },
+  disableOffline: true,
+  fetchPolicy: 'no-cache'
 });
 
 const appSyncLink = createAppSyncLink({
@@ -22,7 +24,9 @@ const appSyncLink = createAppSyncLink({
   auth: {
     type: AUTH_TYPE.AMAZON_COGNITO_USER_POOLS,
     jwtToken: async () => (await Auth.currentSession()).getIdToken().getJwtToken(),
-  }
+  },
+  disableOffline: true,
+  fetchPolicy: 'no-cache'
 });
 
 const stateLink = createLinkWithCache(cache => withClientState({

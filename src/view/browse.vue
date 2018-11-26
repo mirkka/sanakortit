@@ -211,7 +211,8 @@ export default {
   },
   apollo: {
     listDecks: {
-      query: LIST_DECKS
+      query: LIST_DECKS,
+      fetchPolicy: 'no-cache',
     },
     listTags: {
       query: LIST_TAGS,

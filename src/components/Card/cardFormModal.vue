@@ -177,6 +177,7 @@ export default {
     },
     listDecks: {
       query: LIST_DECKS,
+      fetchPolicy: 'no-cache',
     }
   }
 }

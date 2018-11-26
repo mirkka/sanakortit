@@ -50,7 +50,7 @@
 <script>
 import { getDeck, updateStudyCard, getStudyCard, toggleModal, setActiveCard, setActiveDeck } from '../methods'
 import defaults from '../graphql/defaults';
-import{ GET_STUDY_CARD, EDIT_CARD_SUBSCRIPTION } from  '../graphql/queries'
+import{ GET_STUDY_CARD } from  '../graphql/queries'
 
 export default {
   name: 'study',
@@ -69,25 +69,6 @@ export default {
           id: this.$route.params.deckId,
         }
       },
-      subscribeToMore: [{
-        document: EDIT_CARD_SUBSCRIPTION,
-        variables () {
-          return {
-            id: this.$route.params.deckId,
-          }
-        },
-        updateQuery: ({ studyCard }, { subscriptionData }) => {
-          const { __typename, deckId,  level } = studyCard
-          return {
-            studyCard: {
-              __typename,
-              deckId,
-              level,
-              ...subscriptionData.data.onUpdateCard
-            }
-          }
-        }
-      }],
       fetchPolicy: 'no-cache'
     },
   },

@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import { toggleModal, setActiveDeck } from '../methods.js';
-import { ACTIVE_DECK } from '../graphql/queries.js';
+import { toggleModal, setActiveDeck } from '../methods.js'
+import { ACTIVE_DECK } from '../graphql/queries.js'
 
 export default {
   name: 'deckRow',
@@ -40,7 +40,7 @@ export default {
   },
   apollo: {
     ActiveDeck: {
-      query: ACTIVE_DECK,
+      query: ACTIVE_DECK
     }
   }
 }

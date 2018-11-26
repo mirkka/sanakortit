@@ -11,10 +11,8 @@ Vue.use(VueApollo)
 
 Vue.config.productionTip = false
 
-apolloProvider.defaultClient.resetStore().then(() => {
-  new Vue({
-    render: h => h(App),
-    apolloProvider,
-    router
-  }).$mount('#app')
-})
+new Vue({
+  render: h => h(App),
+  apolloProvider,
+  router
+}).$mount('#app')

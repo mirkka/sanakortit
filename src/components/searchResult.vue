@@ -36,7 +36,8 @@ export default {
   },
   apollo: {
     listDecks: {
-      query: LIST_DECKS
+      query: LIST_DECKS,
+      fetchPolicy: 'no-cache',
     },
     ActiveCards: {
       query: GET_ACTIVE_CARDS

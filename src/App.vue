@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" v-if="hydrated">
     <div class="container mt-3 mb-3">
       <navigation />
       <router-view></router-view>
@@ -26,6 +26,7 @@ import DeleteCardModal from './components/Card/deleteCardModal'
 import FinishStudyModal from './components/finishStudyModal'
 
 import Navigation from './components/nav'
+import defaults from "./graphql/defaults"
 
 import { IS_MODAL_OPEN } from './graphql/queries'
 
@@ -44,7 +45,7 @@ export default {
   },
   data () {
     return {
-      Modals: {},
+      Modals: defaults.Modals,
       hydrated: false
     }
   },
@@ -56,6 +57,9 @@ export default {
   async mounted() {
     await this.$apollo.provider.defaultClient.hydrated();
     this.hydrated = true;
+  },
+  async destroyed() {
+    await this.$apollo.provider.defaultClient.resetStore();
   }
 }
 

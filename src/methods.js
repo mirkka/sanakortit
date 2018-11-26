@@ -4,7 +4,8 @@ import { GET_STUDY_CARD,
          GET_DECK,
          SEARCH_CARDS,
          GET_CARDS,
-         LIST_TAGS } from './graphql/queries'
+         LIST_TAGS,
+         LIST_DECKS} from './graphql/queries'
 import { updateSearchResultsList } from './helpers'
 
 export const toggleModal = modalName => {
@@ -16,7 +17,8 @@ export const toggleModal = modalName => {
     `,
     variables: {
       modalName
-    }
+    },
+    fetchPolicy: 'no-cache',
   })
 }
 
@@ -39,7 +41,8 @@ export const setActiveDeck = ActiveDeck => {
     `,
     variables: {
       ActiveDeck
-    }
+    },
+    fetchPolicy: 'no-cache',
   })
 }
 
@@ -109,7 +112,8 @@ export const createDeck = input => {
     `,
     variables: {
       input
-    }
+    },
+    refetchQueries: [{query: LIST_DECKS}]
   })
 }
 
@@ -124,7 +128,8 @@ export const deleteDeck = input => {
     `,
     variables: {
       input
-    }
+    },
+    refetchQueries: [{query: LIST_DECKS}]
   })
 }
 
@@ -142,7 +147,8 @@ export const updateDeck = input => {
     `,
     variables: {
       input
-    }
+    },
+    refetchQueries: [{query: LIST_DECKS}]
   })
 }
 
@@ -161,7 +167,8 @@ export const createCard = async input => {
     `,
     variables: {
       input
-    }
+    },
+    refetchQueries: [{query: LIST_DECKS}]
   })
 
   await updateSearchResultsList()
@@ -194,7 +201,8 @@ export const updateStudyCard = input => {
     `,
     variables: {
       input
-    }
+    },
+    refetchQueries: [{query: GET_STUDY_CARD}]
   })
 }
 
