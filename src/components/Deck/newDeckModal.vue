@@ -32,15 +32,13 @@
 
 <script>
 import { toggleModal, createDeck } from '../../methods'
-import { Auth } from 'aws-amplify'
-import _ from 'lodash'
+import { getUser } from '../../helpers.js'
 
 export default {
   name: 'newDeckModal',
   methods: { toggleModal, createDeck,
     handleCreateDeck: async (newDeckName) => {
-      const session = await Auth.currentSession()
-      const author = _.get(session, 'accessToken.payload.username')
+      const author = await getUser()
       const newDeck = {
         author,
         name: newDeckName

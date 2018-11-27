@@ -3,6 +3,7 @@ import searchFilters from './searchFilters'
 import apollo from './apolloClient'
 import _ from 'lodash'
 import { GET_SEARCH_FILTER } from './graphql/queries'
+import { Auth } from 'aws-amplify'
 
 export const clearActiveCards = () => {
   const emptyItems = {items: []}
@@ -34,4 +35,9 @@ export const updateSearchResultsList = async () => {
     filter = searchFilters.cardsByTag(tag)
     return getCards(filter)
   }
+}
+
+export const getUser = async () => {
+  const session = await Auth.currentSession()
+  return _.get(session, 'accessToken.payload.username')
 }
