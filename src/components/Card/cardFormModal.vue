@@ -102,6 +102,7 @@
 import { toggleModal, createCard, editCard, getDeck } from '../../methods.js'
 import { ACTIVE_DECK, LIST_DECKS, ACTIVE_CARD } from '../../graphql/queries.js'
 import defaults  from '../../graphql/defaults'
+import { getUser } from '../../helpers.js'
 import _ from 'lodash'
 
 export default {
@@ -111,14 +112,19 @@ export default {
       newCard: {},
       newDeck: {},
       isExpanded: false,
-      isEdit: false
+      isEdit: false,
+      listDecks: {
+        items: []
+      }
     }
   },
   async mounted() {
-    if (!this.ActiveDeck.due) {
+    if (!this.ActiveDeck.id === "") {
       const response  = await getDeck(this.ActiveCard.deckId)
       const deck = _.get(response.data, 'getDeck')
       this.newDeck = this.ActiveDeck = deck
+    } else {
+      this.newDeck = this.ActiveDeck
     }
 
     if (this.ActiveCard.id !== "") {
@@ -130,11 +136,13 @@ export default {
     toggleModal,
     createCard,
     handleCreateCard: async function(cardData) {
+      const author = await getUser()
       const newCardObj = {
         front: cardData.front,
         back: cardData.back,
         tags: cardData.tags,
         deckId: this.newDeck.id,
+        author,
       }
       await createCard(newCardObj);
 
