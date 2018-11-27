@@ -1,5 +1,5 @@
 <template>
-  <div id="app" v-if="hydrated">
+  <div id="app">
     <div class="container mt-3 mb-3">
       <navigation />
       <router-view></router-view>
@@ -46,20 +46,12 @@ export default {
   data () {
     return {
       Modals: defaults.Modals,
-      hydrated: false
     }
   },
   apollo: {
     Modals: {
       query: IS_MODAL_OPEN,
     },
-  },
-  async mounted() {
-    await this.$apollo.provider.defaultClient.hydrated();
-    this.hydrated = true;
-  },
-  async destroyed() {
-    await this.$apollo.provider.defaultClient.resetStore();
   }
 }
 

@@ -19,7 +19,7 @@ Amplify.configure({
 });
 
 const appSyncLink = createAppSyncLink({
-  url: "https://7quaiataj5gzpmlrjhx4dnsm7u.appsync-api.eu-central-1.amazonaws.com/graphql",
+  url: process.env.VUE_APP_API_URL,
   region: process.env.VUE_APP_AWS_REGION,
   auth: {
     type: AUTH_TYPE.AMAZON_COGNITO_USER_POOLS,
@@ -29,12 +29,16 @@ const appSyncLink = createAppSyncLink({
   fetchPolicy: 'no-cache'
 });
 
-const stateLink = createLinkWithCache(cache => withClientState({
-  cache,
-  defaults,
-  resolvers,
-  typeDefs,
-}));
+const stateLink = createLinkWithCache(cache => {
+  cache.data.clear()
+
+  return withClientState({
+    cache,
+    defaults,
+    resolvers,
+    typeDefs,
+  })
+});
 
 const link = ApolloLink.from([stateLink, appSyncLink]);
 
