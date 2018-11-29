@@ -54,6 +54,7 @@ export default {
   },
   methods: {
     handleLogout: async function () {
+      this.$apollo.provider.clients.defaultClient.cache.data.clear()
       await Auth.signOut()
       this.$router.push('/login')
     }

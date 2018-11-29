@@ -5,21 +5,34 @@ import lodash from 'lodash'
 export default {
   Mutation: {
     toggleModal: (_, modalName, { cache }) => {
-      const modals = cache.readQuery({ query: IS_MODAL_OPEN })
       const key = modalName.modalName;
+      try {
+        const modals = cache.readQuery({ query: IS_MODAL_OPEN })
 
-      const newVal = !modals.Modals[key]
+        const newVal = !modals.Modals[key]
 
-      const newModals = {
-        ...modals.Modals,
-        [ key ]: newVal
+        const newModals = {
+          ...modals.Modals,
+          [ key ]: newVal
+        }
+
+        const data = {
+          Modals: newModals
+        };
+        cache.writeData({ data });
+        return data;
+      } catch (error) {
+        const newVal = !defaults.Modals[key]
+        const newModals = {
+          ...defaults.Modals,
+          [ key ]: newVal
+        }
+        const data = {
+          Modals: newModals
+        };
+        cache.writeData({ data });
+        return data
       }
-
-      const data = {
-        Modals: newModals
-      };
-      cache.writeData({ data });
-      return data;
     },
     setActiveDeck: (_, { ActiveDeck }, { cache }) => {
       const data = cache.readQuery({ query: ACTIVE_DECK });

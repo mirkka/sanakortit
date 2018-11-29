@@ -17,8 +17,7 @@ export const toggleModal = modalName => {
     `,
     variables: {
       modalName
-    },
-    fetchPolicy: 'no-cache',
+    }
   })
 }
 
