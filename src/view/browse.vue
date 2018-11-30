@@ -196,8 +196,12 @@ export default {
   data () {
     return {
       phrase: "",
-      listDecks: [],
-      listCards: [],
+      listDecks: {
+        items: []
+      },
+      listCards: {
+        items: []
+      },
       selectedDeck: {},
       selectedTag: undefined,
       listTags: [],
