@@ -2,8 +2,8 @@
   <div class="modal-open">
     <div class="modal-backdrop fade show"></div>
     <div class="modal fade show d-block" tabindex="-1" role="dialog" @click="toggleModal('copyCard')">
-      <div class="modal-dialog modal-lg" @click="$event.stopPropagation()">
-        <div class="modal-content">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content" @click="closeDropdown($event, false)">
           <div class="modal-header">
             <h4 class="modal-title">
               <i class="fa fa-file-alt"></i> Copy / Move card(s)
@@ -16,12 +16,12 @@
             </button>
           </div>
           <div class="modal-body p-2">
-            <div class="row">
+            <div class="d-flex align-items-baseline">
               <div class="col-sm-4 col-xs-12">
                 <h4 class="modal-title">To existing deck</h4>
                 <button class="btn btn-secondary dropdown-toggle"
                         type="button"
-                        @click="toggleDropdown">
+                        @click="toggleDropdown($event)">
                   {{newDeck.name || 'select deck'}}
                 </button>
                 <div class="dropdown-menu" :class="{ 'd-block': isExpanded }">
@@ -74,14 +74,22 @@ export default {
     return {
       isExpanded: false,
       newDeck: {},
-      newDeckName: ''
+      newDeckName: '',
+      listDecks: {
+        items: []
+      }
     }
   },
   methods: {
     toggleModal,
     clearActiveCards,
-    toggleDropdown: function () {
-      this.isExpanded = !this.isExpanded;
+    toggleDropdown: function (event) {
+      event.stopPropagation()
+      this.isExpanded = !this.isExpanded
+    },
+    closeDropdown: function (event, boolean) {
+      event.stopPropagation()
+      this.isExpanded = boolean
     },
     setNewDeck: function(newDeck) {
       this.newDeck = newDeck;

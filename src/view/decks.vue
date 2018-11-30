@@ -13,7 +13,7 @@
       <button type="button" class="btn btn-outline-secondary mr-2" @click="toggleModal('createDeck')">
         <i class="fa fa-plus"></i> Create deck
       </button>
-        <button type="button" class="btn btn-outline-secondary" @click="toggleModal('exportDeck')">
+        <button type="button" disabled class="btn btn-outline-secondary" @click="toggleModal('exportDeck')">
           <i class="fa fa-paperclip"></i> Export / Import deck
         </button>
     </div>

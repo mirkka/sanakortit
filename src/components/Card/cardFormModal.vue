@@ -2,8 +2,8 @@
   <div class="modal-open">
     <div class="modal-backdrop fade show"></div>
     <div class="modal fade show d-block" tabindex="-1" role="dialog" @click="toggleModal('createCard')">
-      <div class="modal-dialog modal-lg" @click="$event.stopPropagation()">
-        <div class="modal-content">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content" @click="closeDropdown($event, false)">
           <div class="modal-header">
             <h4 class="modal-title" v-if="isEdit"><i class="fa fa-file-alt"></i> Edit card</h4>
             <h4 class="modal-title" v-if="!isEdit"><i class="fa fa-file-alt"></i> Add card</h4>
@@ -19,7 +19,7 @@
               <div v-if="!isEdit">
                 <button class="btn btn-secondary dropdown-toggle"
                         type="button"
-                        @click="toggleDropdown">
+                        @click="toggleDropdown($event)">
                   {{newDeck.name || 'select deck'}}
                 </button>
                 <div class="dropdown-menu" :class="{ 'd-block': isExpanded }">
@@ -160,8 +160,13 @@ export default {
       await editCard(updatedCard)
       toggleModal('createCard')
     },
-    toggleDropdown: function () {
-      this.isExpanded = !this.isExpanded;
+    toggleDropdown: function (event) {
+      event.stopPropagation()
+      this.isExpanded = !this.isExpanded
+    },
+    closeDropdown: function (event, boolean) {
+      event.stopPropagation()
+      this.isExpanded = boolean
     },
     flipSides: function(cardData) {
       const flippedCard = {
