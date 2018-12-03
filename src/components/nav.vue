@@ -1,13 +1,13 @@
 <template>
-  <div class="px-3 row header">
-    <div class="row text-uppercase col-sm-4 py-3">
-      <strong>Sanakortit</strong>
+  <div class="px-lg-3 row header d-xs-flex flex-xs-column">
+    <div class="row text-uppercase col-8 col-lg-2 py-3 px-lg-3 mr-5">
+      <strong class="ml-3 ml-lg-1">Sanakortit</strong>
     </div>
-    <div class="col-sm-4 d-flex" v-if="isNavVisible">
-      <router-link to="/" tag="div" class="p-3 pointer">Decks</router-link>
-      <router-link to="/browse" class="pointer p-3" tag="div">Browse</router-link>
+    <div class="col-md-4 d-flex order-2" v-if="isNavVisible">
+      <router-link to="/" tag="div" class="py-3 px-5 px-lg-3 pointer">Decks</router-link>
+      <router-link to="/browse" class="py-3 px-5 px-lg-3 pointer" tag="div">Browse</router-link>
     </div>
-    <div class="flex-grow-1 d-flex justify-content-end align-items-center mx-2">
+    <div class="flex-lg-grow-1 d-flex justify-content-end align-items-center mx-lg-2 order-lg-2">
       <button class="pointer logout-button"
               v-if="isNavVisible"
               @click="handleLogout">

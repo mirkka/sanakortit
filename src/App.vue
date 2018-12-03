@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="container mt-3 mb-3">
+    <div class="container mt-md-3 mb-md-3">
       <navigation />
       <router-view></router-view>
     </div>
@@ -115,6 +115,41 @@ export default {
 
   .has-error .glyphicon {
     display: block;
+  }
+
+  .mobile-menu-handler {
+    display: none;
+  }
+
+  .mobile-menu {
+    display: flex;
+    height: auto;
+  }
+
+  @media (max-width: 667px) {
+    body {
+      background-color: white;
+    }
+    .container {
+      box-shadow: none;
+    }
+    .mobile-menu-handler {
+      display: flex;
+    }
+    .mobile-menu {
+      height: 0;
+      overflow: hidden;
+    }
+    .mobile-menu-expanded {
+      height: auto;
+    }
+    .mobile-actions {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin-bottom: 15px;
+    }
   }
 
   /* helpers */

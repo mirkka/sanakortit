@@ -1,35 +1,43 @@
 <template>
   <div>
     <div class="row">
-      <div class="col-sm-3 pt-2 row d-flex flex-column">
-        <div class="border-bottom">
-          <strong class="pl-3">Deck</strong>
-          <ul class="list">
-            <li class="px-3 pointer"
-                v-for="deck in listDecks.items"
-                :key="deck.id"
-                :class="{ 'bg-warning': isDeckSelected(deck) }"
-                @click="selectDeck(deck)">
-              {{deck.name}}
-            </li>
-          </ul>
+      <div class="col-12 col-lg-3 d-lg-flex">
+        <div class="mobile-menu-handler col-12 justify-content-between py-2"
+              @click="toggleMobileMenu">
+          <div>Select filter ...</div>
+          <div><i :class="{'fa fa-angle-up': isMobileMenuVisible, 'fa fa-angle-down': !isMobileMenuVisible}"></i></div>
         </div>
-        <div class="py-2">
-          <strong class="pl-3">Tags</strong>
-          <ul class="list">
-            <li class="px-3 pointer"
-                v-for="tag in listTags.tags"
-                :key="tag"
-                :class="{ 'bg-warning': isTagSelected(tag) }"
-                @click="selectTag(tag)">
-              {{tag}}
-            </li>
-          </ul>
+        <div class="mobile-menu col-12 pt-2 row d-flex flex-column"
+             :class="{'mobile-menu-expanded': isMobileMenuVisible}">
+          <div class="border-bottom">
+            <strong class="pl-3">Deck</strong>
+            <ul class="list">
+              <li class="px-3 pointer"
+                  v-for="deck in listDecks.items"
+                  :key="deck.id"
+                  :class="{ 'bg-warning': isDeckSelected(deck) }"
+                  @click="selectDeck(deck)">
+                {{deck.name}}
+              </li>
+            </ul>
+          </div>
+          <div class="py-2">
+            <strong class="pl-3">Tags</strong>
+            <ul class="list">
+              <li class="px-3 pointer"
+                  v-for="tag in listTags.tags"
+                  :key="tag"
+                  :class="{ 'bg-warning': isTagSelected(tag) }"
+                  @click="selectTag(tag)">
+                {{tag}}
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
 
-      <div class="col-sm-8 border-left">
-        <div class="row py-2 px-3 justify-content-end">
+      <div class="col-12 col-lg-8 border-left">
+        <div class="row py-2 px-3 justify-content-center justify-content-lg-end mobile-actions">
           <button type="button"
                   class="btn btn-outline-secondary btn-xs"
                   title="Create New card"
@@ -188,6 +196,9 @@ export default {
     reverse(searchResults) {
       const reversedSearchResults = searchResults.items.reverse()
       setSearchResults(reversedSearchResults)
+    },
+    toggleMobileMenu: function () {
+      this.isMobileMenuVisible = !this.isMobileMenuVisible
     }
   },
   components: {
@@ -210,7 +221,8 @@ export default {
       },
       ActiveCards: {
         items: []
-      }
+      },
+      isMobileMenuVisible: false
     }
   },
   apollo: {

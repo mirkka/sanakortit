@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="d-flex mt-2">
-      <div class="col-sm-9 col-xs-7"><strong>Deck</strong>
+      <div class="col-sm-9 col-xs-7 mr-5 mr-lg-1"><strong>Deck</strong>
       </div>
       <div class="col-sm-1 col-xs-2"><strong>Due</strong>
       </div>
