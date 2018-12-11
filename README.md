@@ -1,4 +1,7 @@
 # sanakortit
+### Web app for learning new words.
+
+prod: http://sanakortit.com.s3-website.eu-central-1.amazonaws.com/
 
 ## Project setup
 ```
@@ -15,12 +18,17 @@ yarn run serve
 yarn run build
 ```
 
-### Run your tests
-```
-yarn run test
-```
+### Deployment
+Manual upload content of dist folder into S3 bucket. Set files as public.
 
 ### Lints and fixes files
 ```
 yarn run lint
 ```
+
+### technologies
+  - apollo link
+  - appsync client
+  - vue
+  - graphql
+  - S3
