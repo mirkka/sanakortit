@@ -1,7 +1,7 @@
 # sanakortit
 ### Web app for learning new words.
 
-prod: http://sanakortit.com.s3-website.eu-central-1.amazonaws.com/
+prod: http://sanakortit.s3-website.eu-central-1.amazonaws.com/
 
 ## Project setup
 ```
